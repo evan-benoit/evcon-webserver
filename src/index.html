@@ -1,0 +1,22 @@
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+<!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"></script> -->
+<!--   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.js"></script> -->
+<title>Premier League Standings 2022-2023</title>
+<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+</head>
+<h1 style="text-align: center; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'"><img src="/images/favicon.ico" width=40 height="40">Premier League Standings 2022-2023</h1>
+<button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="showall">show all</button>
+<button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="hideall">hide all</button>
+<button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="topfive">top five</button>
+<button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="bottomfive">bottom five</button>
+<button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="animate">animate</button>
+
+<div style="width: 85%;"><canvas id="teamSeasons"></canvas></div>
+
+<script type="module" src="epl.js"></script>
+
+<div style="text-align: right; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'">Inspired by <a href="http://pennant-race.com/">pennant-race.com</a></div>
