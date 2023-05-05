@@ -12,7 +12,8 @@ import { getLeagueSeasons } from './api'
       options: {
         // animation,
         parsing: {
-          xAxisKey: 'timestamp',
+          xAxisKey: 'gameNumber',
+          // xAxisKey: 'timestamp',          
           yAxisKey: 'cumPoints'
         },
         spanGaps: true,
@@ -24,9 +25,13 @@ import { getLeagueSeasons } from './api'
             }
           },
           x: {
-            type: "time",
-            parsing: false,
-  
+            type: "linear",
+            // type: "time",
+            parsing: true,
+            title: {
+              text: 'Match Number',
+              display: true,
+            }
           }
         },
         responsive: true,
