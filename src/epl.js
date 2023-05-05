@@ -11,6 +11,10 @@ import { getLeagueSeasons } from './api'
       data: {datasets: datasets },
       options: {
         // animation,
+        parsing: {
+          xAxisKey: 'timestamp',
+          yAxisKey: 'cumPoints'
+        },
         spanGaps: true,
         scales: {
           y: {
