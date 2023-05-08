@@ -4,7 +4,7 @@ import { getLeagueSeasons } from './api'
 (async function() {
   const datasets = await getLeagueSeasons();
 
-  new Chart(
+  var teamSeasons = new Chart(
     document.getElementById('teamSeasons'),
     {
       type: 'line',
@@ -57,4 +57,51 @@ import { getLeagueSeasons } from './api'
       },
     }
   );
+
+
+  $("#showall").click(function() {
+    teamSeasons.data.datasets.forEach(function(ds) {
+     ds.hidden = false;
+   });
+   teamSeasons.update();
+  });
+  
+  $("#hideall").click(function() {
+    teamSeasons.data.datasets.forEach(function(ds) {
+     ds.hidden = true;
+   });
+   teamSeasons.update();
+  });
+  
+  $("#topfive").click(function() {
+    teamSeasons.data.datasets.forEach(function(ds) {
+      if (ds.label == 'Arsenal' || ds.label == 'Manchester City' || ds.label == 'Manchester United' || ds.label == 'Tottenham' || ds.label == 'Liverpool') {
+        ds.hidden = false;
+      } else {
+        ds.hidden = true;
+      }
+   });
+   teamSeasons.update();
+  });
+  
+  $("#bottomfive").click(function() {
+    teamSeasons.data.datasets.forEach(function(ds) {
+      if (ds.label == 'West Ham' || ds.label == 'Leeds' || ds.label == 'Everton' || ds.label == 'Southampton' || ds.label == 'Bournemouth') {
+        ds.hidden = false;
+      } else {
+        ds.hidden = true;
+      }
+   });
+   teamSeasons.update();
+  });
+  
+  
+  $("#animate").click(function() {
+    teamSeasons.options.animation=animation;
+    teamSeasons.update();
+  });
+
 })();
+
+
+
