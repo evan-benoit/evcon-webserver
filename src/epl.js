@@ -4,59 +4,60 @@ import { getLeagueSeasons } from './api'
 (async function() {
   const datasets = await getLeagueSeasons();
 
-  var teamSeasons = new Chart(
-    document.getElementById('teamSeasons'),
-    {
-      type: 'line',
-      data: {datasets: datasets },
-      options: {
-        // animation,
-        parsing: {
-          xAxisKey: 'gameNumber',
-          // xAxisKey: 'timestamp',          
-          yAxisKey: 'cumPoints'
-        },
-        spanGaps: true,
-        scales: {
-          y: {
-            title: {
-              text: 'Points',
-              display: true,
-            }
-          },
-          x: {
-            type: "linear",
-            // type: "time",
-            parsing: true,
-            title: {
-              text: 'Match Number',
-              display: true,
-            }
+  var chartTemplate = {
+    type: 'line',
+    data: {datasets: datasets },
+    options: {
+      // animation,
+      parsing: {
+        // xAxisKey: 'gameNumber',
+        xAxisKey: 'timestamp',
+        yAxisKey: 'cumPoints'
+      },
+      spanGaps: true,
+      scales: {
+        y: {
+          title: {
+            text: 'Points',
+            display: true,
           }
         },
-        responsive: true,
-        interaction: {
-          mode: 'index',
-          intersect: false,
-        },
-        plugins: {
-          legend: {
-            position: 'bottom',
-            align: 'start'
-          },
-          tooltip: {
-            mode: 'index',
-            intersect: true,
-            enabled: true,
-            postition: 'nearest',
-            itemSort: function(a, b) {
-              return b.raw.y - a.raw.y;
-            }
+        x: {
+          // type: "linear",
+          type: "time",
+          parsing: true,
+          title: {
+            text: 'Date',
+            display: true,
           }
         }
       },
+      responsive: true,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          align: 'start'
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: true,
+          enabled: true,
+          postition: 'nearest',
+          itemSort: function(a, b) {
+            return b.raw.y - a.raw.y;
+          }
+        }
+      }
     }
-  );
+  };
+
+
+  var teamSeasons = new Chart(document.getElementById('teamSeasons'),chartTemplate);
+   
 
 
   $("#showall").click(function() {
@@ -100,113 +101,23 @@ import { getLeagueSeasons } from './api'
     if (teamSeasons.options.parsing.xAxisKey == 'gameNumber') {
         teamSeasons.destroy();
 
-        teamSeasons = new Chart(
-          document.getElementById('teamSeasons'),
-          {
-            type: 'line',
-            data: {datasets: datasets },
-            options: {
-              // animation,
-              parsing: {
-                xAxisKey: 'timestamp',          
-                yAxisKey: 'cumPoints'
-              },
-              spanGaps: true,
-              scales: {
-                y: {
-                  title: {
-                    text: 'Points',
-                    display: true,
-                  }
-                },
-                x: {
-                  type: "time",
-                  parsing: true,
-                  title: {
-                    text: 'Date',
-                    display: true,
-                  }
-                }
-              },
-              responsive: true,
-              interaction: {
-                mode: 'index',
-                intersect: false,
-              },
-              plugins: {
-                legend: {
-                  position: 'bottom',
-                  align: 'start'
-                },
-                tooltip: {
-                  mode: 'index',
-                  intersect: true,
-                  enabled: true,
-                  postition: 'nearest',
-                  itemSort: function(a, b) {
-                    return b.raw.y - a.raw.y;
-                  }
-                }
-              }
-            },
-          }
-        );
+        chartTemplate.options.parsing.xAxisKey = 'timestamp';
+        chartTemplate.options.scales.x.type = 'time';
+        chartTemplate.options.scales.x.title.text = 'Date';
+
+
+        teamSeasons = new Chart(document.getElementById('teamSeasons'), chartTemplate);
 
 
     } else {
-        teamSeasons.destroy();
+      teamSeasons.destroy();
 
-        teamSeasons = new Chart(
-          document.getElementById('teamSeasons'),
-          {
-            type: 'line',
-            data: {datasets: datasets },
-            options: {
-              // animation,
-              parsing: {
-                xAxisKey: 'gameNumber',
-                yAxisKey: 'cumPoints'
-              },
-              spanGaps: true,
-              scales: {
-                y: {
-                  title: {
-                    text: 'Points',
-                    display: true,
-                  }
-                },
-                x: {
-                  type: "linear",
-                  parsing: true,
-                  title: {
-                    text: 'Match Number',
-                    display: true,
-                  }
-                }
-              },
-              responsive: true,
-              interaction: {
-                mode: 'index',
-                intersect: false,
-              },
-              plugins: {
-                legend: {
-                  position: 'bottom',
-                  align: 'start'
-                },
-                tooltip: {
-                  mode: 'index',
-                  intersect: true,
-                  enabled: true,
-                  postition: 'nearest',
-                  itemSort: function(a, b) {
-                    return b.raw.y - a.raw.y;
-                  }
-                }
-              }
-            },
-          }
-        );
+      chartTemplate.options.parsing.xAxisKey = 'gameNumber';
+      chartTemplate.options.scales.x.type = 'linear';
+      chartTemplate.options.scales.x.title.text = 'Match Number';
+
+
+      teamSeasons = new Chart(document.getElementById('teamSeasons'), chartTemplate);
     }
 
     teamSeasons.update();
