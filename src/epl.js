@@ -10,7 +10,7 @@ import { getLeagueSeasons } from './api'
     options: {
       // animation,
       parsing: {
-        // xAxisKey: 'gameNumber',
+        // xAxisKey: 'matchNumber',
         xAxisKey: 'timestamp',
         yAxisKey: 'cumPoints'
       },
@@ -98,7 +98,7 @@ import { getLeagueSeasons } from './api'
   
   
   $("#toggle").click(function() {
-    if (teamSeasons.options.parsing.xAxisKey == 'gameNumber') {
+    if (teamSeasons.options.parsing.xAxisKey == 'matchNumber') {
         teamSeasons.destroy();
 
         chartTemplate.options.parsing.xAxisKey = 'timestamp';
@@ -112,7 +112,7 @@ import { getLeagueSeasons } from './api'
     } else {
       teamSeasons.destroy();
 
-      chartTemplate.options.parsing.xAxisKey = 'gameNumber';
+      chartTemplate.options.parsing.xAxisKey = 'matchNumber';
       chartTemplate.options.scales.x.type = 'linear';
       chartTemplate.options.scales.x.title.text = 'Match Number';
 
