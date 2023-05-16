@@ -48,7 +48,7 @@ import { getLeagueSeasons } from './api'
           enabled: true,
           postition: 'nearest',
           itemSort: function(a, b) {
-            return b.raw.y - a.raw.y;
+            return b.raw.cumPoints - a.raw.cumPoints;
           }
         }
       }
