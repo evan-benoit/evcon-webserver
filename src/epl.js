@@ -73,7 +73,7 @@ import { getLeagueSeasons } from './api'
             label: function(tooltipItem) {
                 fixture = tooltipItem.dataset.data[tooltipItem.dataIndex]
                 if (fixture !== undefined) {
-                  return fixture.teamName + " - " + fixture.cumPoints + " (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
+                  return fixture.teamName + ": " + fixture.cumPoints + " (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
                 }
             },
           }
