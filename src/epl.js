@@ -48,7 +48,25 @@ import { getLeagueSeasons } from './api'
           enabled: true,
           postition: 'nearest',
           itemSort: function(a, b) {
-            return b.raw.cumPoints - a.raw.cumPoints;
+            if (a.raw.cumPoints < b.raw.cumPoints) {
+              return 1;
+            } else if (a.raw.cumPoints > b.raw.cumPoints) {
+              return -1;
+            } else {
+              if (a.raw.cumDifferential < b.raw.cumDifferential) {
+                return 1;
+              } else if (a.raw.cumDifferential > b.raw.cumDifferential) {
+                return -1;
+              } else {
+                if (a.raw.cumGoals < b.raw.cumGoals) {
+                  return 1;
+                } else if (a.raw.cumGoals > b.raw.cumGoals) {
+                  return -1;
+                } else {
+                  return 0;
+                }
+              }
+            }
           },
           callbacks: {
             //https://www.chartjs.org/docs/latest/configuration/tooltip.html#tooltip-item-context
