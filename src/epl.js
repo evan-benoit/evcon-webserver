@@ -76,6 +76,12 @@ import { getLeagueSeasons } from './api'
                   return fixture.teamName + ": " + fixture.cumPoints + " (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
                 }
             },
+            title: function(tooltipItems) {
+              chart = tooltipItems[0].chart;
+              points = chart.getElementsAtEventForMode(chart._lastEvent, 'nearest', { intersect: true }, true);
+              raw = points[0].element.$context.raw;
+              return raw.homeTeam + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore;
+            },
           }
         }
       }
