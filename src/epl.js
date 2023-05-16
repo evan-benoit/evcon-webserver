@@ -49,6 +49,15 @@ import { getLeagueSeasons } from './api'
           postition: 'nearest',
           itemSort: function(a, b) {
             return b.raw.cumPoints - a.raw.cumPoints;
+          },
+          callbacks: {
+            //https://www.chartjs.org/docs/latest/configuration/tooltip.html#tooltip-item-context
+            label: function(tooltipItem) {
+                fixture = tooltipItem.dataset.data[tooltipItem.dataIndex]
+                if (fixture !== undefined) {
+                  return fixture.teamName + " - " + fixture.cumPoints + " (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
+                }
+            },
           }
         }
       }
