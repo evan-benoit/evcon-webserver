@@ -12,8 +12,9 @@
   },
   "dependencies": {
     "@cubejs-client/core": "^0.31.0",
+    "@firebase/firestore": "^3.9.0",
     "chart.js": "^4.0.0",
-    "firebase": "^9.18.0",
-    "@firebase/firestore": "^3.9.0"
+    "chartjs-plugin-autocolors": "^0.2.2",
+    "firebase": "^9.18.0"
   }
 }

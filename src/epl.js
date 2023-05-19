@@ -1,7 +1,8 @@
 import { getLeagueSeasons } from './api'
-import { Colors } from 'chart.js';
+import autocolors from 'chartjs-plugin-autocolors';
 
-Chart.register(Colors);
+Chart.register(autocolors);
+
 
 (async function() {
   
@@ -47,9 +48,7 @@ Chart.register(Colors);
           position: 'bottom',
           align: 'start'
         },
-        colors: {
-          enabled: true
-        },
+        autocolors,
         tooltip: {
           mode: 'index',
           intersect: true,
