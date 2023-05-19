@@ -1,8 +1,11 @@
 import { getLeagueSeasons } from './api'
 import autocolors from 'chartjs-plugin-autocolors';
+import zoomPlugin from 'chartjs-plugin-zoom';
+
 
 Chart.register(autocolors);
 
+Chart.register(zoomPlugin);
 
 (async function() {
   
@@ -47,6 +50,24 @@ Chart.register(autocolors);
         legend: {
           position: 'bottom',
           align: 'start'
+        },
+        zoom: {
+          pan: {
+              enabled: true
+          },
+          limits: {
+            x: {min: 1653001726000, max: 1684537726000},
+            y: {min: 0, max: 100}
+          },
+          zoom: {
+            wheel: {
+              enabled: true,
+            },
+            pinch: {
+              enabled: true
+            },
+            mode: 'xy',
+          }
         },
         autocolors,
         tooltip: {
