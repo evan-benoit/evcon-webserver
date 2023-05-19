@@ -2,8 +2,10 @@ import { getLeagueSeasons } from './api'
 
 
 (async function() {
-  const datasets = await getLeagueSeasons('39-2022'); //premier league
-  //const datasets = await getLeagueSeasons('254-2023'); //NWSL
+  
+  leagueSeason = $("#leagueSeason").find(":selected").val();
+
+  const datasets = await getLeagueSeasons(leagueSeason); //premier league
 
   var chartTemplate = {
     type: 'line',
