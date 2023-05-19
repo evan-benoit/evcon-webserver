@@ -1,5 +1,7 @@
 import { getLeagueSeasons } from './api'
+import { Colors } from 'chart.js';
 
+Chart.register(Colors);
 
 (async function() {
   
@@ -44,6 +46,9 @@ import { getLeagueSeasons } from './api'
         legend: {
           position: 'bottom',
           align: 'start'
+        },
+        colors: {
+          enabled: true
         },
         tooltip: {
           mode: 'index',
