@@ -19,8 +19,8 @@ const analytics = getAnalytics(app);
 
 const db = getFirestore(app);
 
-export async function getLeagueSeasons(){
-    const docRef = doc(db, "leagueSeasons", "premier-2022");
+export async function getLeagueSeasons(leagueSeason){
+    const docRef = doc(db, "leagueSeasons", leagueSeason);
     const docSnap = await getDoc(docRef);
     
     if (docSnap.exists()) {
