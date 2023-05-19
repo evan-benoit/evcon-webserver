@@ -5,7 +5,7 @@ import { getLeagueSeasons } from './api'
   
   leagueSeason = $("#leagueSeason").find(":selected").val();
 
-  const datasets = await getLeagueSeasons(leagueSeason); //premier league
+  datasets = await getLeagueSeasons(leagueSeason); //premier league
 
   var chartTemplate = {
     type: 'line',
@@ -131,7 +131,23 @@ import { getLeagueSeasons } from './api'
    });
    teamSeasons.update();
   });
-  
+
+  $("#leagueSeason").change(async function() {
+    leagueSeason = $("#leagueSeason").find(":selected").val();
+    datasets = await getLeagueSeasons(leagueSeason); //premier league  
+
+    teamSeasons.destroy();
+
+    chartTemplate.options.parsing.xAxisKey = 'timestamp';
+    chartTemplate.options.scales.x.type = 'time';
+    chartTemplate.options.scales.x.title.text = 'Date';
+    chartTemplate.data.datasets = datasets;
+
+    teamSeasons = new Chart(document.getElementById('teamSeasons'), chartTemplate);
+
+    teamSeasons.update();
+  });
+
   
   $("#toggle").click(function() {
     if (teamSeasons.options.parsing.xAxisKey == 'matchNumber') {
