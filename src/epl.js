@@ -13,6 +13,25 @@ Chart.register(zoomPlugin);
 
   datasets = await getLeagueSeasons(leagueSeason); //premier league
 
+  //Calculate the max and min X and Y for the zoom feature
+  maxY =  Math.max(...datasets.map(ds =>
+    Math.max(...ds.data.map(d => d.cumPoints))
+  ));
+
+  minY =  Math.min(...datasets.map(ds =>
+    Math.min(...ds.data.map(d => d.cumPoints))
+  ));
+
+
+  maxX =  Math.max(...datasets.map(ds =>
+    Math.max(...ds.data.map(d => d.timestamp))
+  ));
+
+  minX =  Math.min(...datasets.map(ds =>
+    Math.min(...ds.data.map(d => d.timestamp))
+  ));
+
+
   var chartTemplate = {
     type: 'line',
     data: {datasets: datasets },
@@ -56,8 +75,8 @@ Chart.register(zoomPlugin);
               enabled: true
           },
           limits: {
-            x: {min: 1653001726000, max: 1684537726000},
-            y: {min: 0, max: 100}
+            x: {min: minX, max: maxX},
+            y: {min: minY, max: maxY + 5}
           },
           zoom: {
             wheel: {
