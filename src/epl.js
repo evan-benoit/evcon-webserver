@@ -108,7 +108,11 @@ Chart.register(zoomPlugin);
               chart = tooltipItems[0].chart;
               points = chart.getElementsAtEventForMode(chart._lastEvent, 'nearest', { intersect: true }, true);
               raw = points[0].element.$context.raw;
-              return raw.homeTeam + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore;
+              if (raw.teamName == raw.homeTeam) {
+                return raw.homeTeam.toUpperCase() + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore;
+              } else {
+                return raw.homeTeam + " " + raw.homeScore + " - " + raw.awayTeam.toUpperCase() + " " + raw.awayScore;
+              }
             },
           }
         }
