@@ -81,7 +81,7 @@ Chart.register(zoomPlugin);
           zoom: {
             wheel: {
               enabled: true,
-              speed: .02,
+              speed: .03,
             },
             pinch: {
               enabled: true
