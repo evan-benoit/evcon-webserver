@@ -7,10 +7,7 @@ Chart.register(autocolors);
 
 Chart.register(zoomPlugin);
 
-(async function() {
-  
-  leagueSeason = $("#leagueSeason").find(":selected").val();
-
+async function drawChart(leageSeason) {
   datasets = await getLeagueSeasons(leagueSeason); //premier league
 
   //Calculate the max and min X and Y for the zoom feature
@@ -140,10 +137,15 @@ Chart.register(zoomPlugin);
     }
   };
 
+  return new Chart(document.getElementById('teamSeasons'),chartTemplate);
+}
 
-  var teamSeasons = new Chart(document.getElementById('teamSeasons'),chartTemplate);
-   
 
+//Code to run on page load
+(async function () {
+  
+  leagueSeason = $("#leagueSeason").find(":selected").val();
+  teamSeasons = await drawChart(leagueSeason);
 
   $("#showall").click(function() {
     teamSeasons.data.datasets.forEach(function(ds) {
@@ -183,45 +185,41 @@ Chart.register(zoomPlugin);
 
   $("#leagueSeason").change(async function() {
     leagueSeason = $("#leagueSeason").find(":selected").val();
-    datasets = await getLeagueSeasons(leagueSeason); //premier league  
 
     teamSeasons.destroy();
 
-    chartTemplate.options.parsing.xAxisKey = 'timestamp';
-    chartTemplate.options.scales.x.type = 'time';
-    chartTemplate.options.scales.x.title.text = 'Date';
-    chartTemplate.data.datasets = datasets;
+    teamSeasons = await drawChart(leagueSeason);
 
-    teamSeasons = new Chart(document.getElementById('teamSeasons'), chartTemplate);
+    teamSeasons.options.parsing.xAxisKey = 'timestamp';
+    teamSeasons.options.scales.x.type = 'time';
+    teamSeasons.options.scales.x.title.text = 'Date';
+    teamSeasons.data.datasets = datasets;
 
     teamSeasons.update();
   });
 
   
-  $("#toggle").click(function() {
+  $("#toggle").click(async function() {
     if (teamSeasons.options.parsing.xAxisKey == 'matchNumber') {
-        teamSeasons.destroy();
+      teamSeasons.destroy();
+      teamSeasons = await drawChart(leagueSeason);
+  
+      teamSeasons.options.parsing.xAxisKey = 'timestamp';
+      teamSeasons.options.scales.x.type = 'time';
+      teamSeasons.options.scales.x.title.text = 'Date';
 
-        chartTemplate.options.parsing.xAxisKey = 'timestamp';
-        chartTemplate.options.scales.x.type = 'time';
-        chartTemplate.options.scales.x.title.text = 'Date';
-
-
-        teamSeasons = new Chart(document.getElementById('teamSeasons'), chartTemplate);
-
+      teamSeasons.update();
 
     } else {
       teamSeasons.destroy();
+      teamSeasons = await drawChart(leagueSeason);
 
-      chartTemplate.options.parsing.xAxisKey = 'matchNumber';
-      chartTemplate.options.scales.x.type = 'linear';
-      chartTemplate.options.scales.x.title.text = 'Match Number';
+      teamSeasons.options.parsing.xAxisKey = 'matchNumber';
+      teamSeasons.options.scales.x.type = 'linear';
+      teamSeasons.options.scales.x.title.text = 'Match Number';
 
-
-      teamSeasons = new Chart(document.getElementById('teamSeasons'), chartTemplate);
+      teamSeasons.update();
     }
-
-    teamSeasons.update();
   });
 
 })();
