@@ -93,24 +93,10 @@ async function drawChart(leagueSeason) {
           enabled: true,
           postition: 'nearest',
           itemSort: function(a, b) {
-            if (a.raw.cumPoints < b.raw.cumPoints) {
+            if (a.raw.rank > b.raw.rank) {
               return 1;
-            } else if (a.raw.cumPoints > b.raw.cumPoints) {
-              return -1;
             } else {
-              if (a.raw.cumDifferential < b.raw.cumDifferential) {
-                return 1;
-              } else if (a.raw.cumDifferential > b.raw.cumDifferential) {
-                return -1;
-              } else {
-                if (a.raw.cumGoals < b.raw.cumGoals) {
-                  return 1;
-                } else if (a.raw.cumGoals > b.raw.cumGoals) {
-                  return -1;
-                } else {
-                  return 0;
-                }
-              }
+              return -1;
             }
           },
           callbacks: {
