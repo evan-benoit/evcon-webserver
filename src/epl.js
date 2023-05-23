@@ -8,23 +8,23 @@ Chart.register(autocolors);
 Chart.register(zoomPlugin);
 
 async function drawChart(leagueSeason) {
-  const datasets = await getLeagueSeasons(leagueSeason); //premier league
+  let datasets = await getLeagueSeasons(leagueSeason); //premier league
 
   //Calculate the max and min X and Y for the zoom feature
-  const maxY =  Math.max(...datasets.map(ds =>
+  let maxY =  Math.max(...datasets.map(ds =>
     Math.max(...ds.data.map(d => d.cumPoints))
   ));
 
-  const minY =  Math.min(...datasets.map(ds =>
+  let minY =  Math.min(...datasets.map(ds =>
     Math.min(...ds.data.map(d => d.cumPoints))
   ));
 
 
-  const maxX =  Math.max(...datasets.map(ds =>
+  let maxX =  Math.max(...datasets.map(ds =>
     Math.max(...ds.data.map(d => d.timestamp))
   ));
 
-  const minX =  Math.min(...datasets.map(ds =>
+  let minX =  Math.min(...datasets.map(ds =>
     Math.min(...ds.data.map(d => d.timestamp))
   ));
 
@@ -116,15 +116,15 @@ async function drawChart(leagueSeason) {
           callbacks: {
             //https://www.chartjs.org/docs/latest/configuration/tooltip.html#tooltip-item-context
             label: function(tooltipItem) {
-                fixture = tooltipItem.dataset.data[tooltipItem.dataIndex]
+                const fixture = tooltipItem.dataset.data[tooltipItem.dataIndex]
                 if (fixture !== undefined) {
                   return fixture.teamName + ": " + fixture.cumPoints + " points (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
                 }
             },
             title: function(tooltipItems) {
-              chart = tooltipItems[0].chart;
-              points = chart.getElementsAtEventForMode(chart._lastEvent, 'nearest', { intersect: true }, true);
-              raw = points[0].element.$context.raw;
+              const chart = tooltipItems[0].chart;
+              const points = chart.getElementsAtEventForMode(chart._lastEvent, 'nearest', { intersect: true }, true);
+              const raw = points[0].element.$context.raw;
               if (raw.teamName == raw.homeTeam) {
                 return raw.homeTeam.toUpperCase() + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore;
               } else {
