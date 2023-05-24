@@ -2,13 +2,11 @@ import { getLeagueSeasons } from './api'
 import autocolors from 'chartjs-plugin-autocolors';
 import zoomPlugin from 'chartjs-plugin-zoom';
 
-
 Chart.register(autocolors);
-
 Chart.register(zoomPlugin);
 
 async function drawChart(leagueSeason) {
-  let datasets = await getLeagueSeasons(leagueSeason); //premier league
+  let datasets = await getLeagueSeasons(leagueSeason); 
 
   //Calculate the max and min X and Y for the zoom feature
   let maxY =  Math.max(...datasets.map(ds =>
@@ -124,8 +122,6 @@ async function drawChart(leagueSeason) {
   };
 
   teamSeasonChart = new Chart(document.getElementById('teamSeasons'),chartTemplate);
-
-  return teamSeasonChart;
 }
 
 var teamSeasonChart
