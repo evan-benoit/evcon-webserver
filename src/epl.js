@@ -174,7 +174,7 @@ $( document ).ready(function() {
 
     teamSeasonChart.destroy();
 
-    teamSeasonChart = await drawChart(ls);
+    await drawChart(ls);
 
     teamSeasonChart.options.parsing.xAxisKey = 'timestamp';
     teamSeasonChart.options.scales.x.type = 'time';
@@ -189,7 +189,7 @@ $( document ).ready(function() {
 
     if (teamSeasonChart.options.parsing.xAxisKey == 'matchNumber') {
       teamSeasonChart.destroy();
-      teamSeasonChart = await drawChart(ls);
+      await drawChart(ls);
   
       teamSeasonChart.options.parsing.xAxisKey = 'timestamp';
       teamSeasonChart.options.scales.x.type = 'time';
@@ -199,7 +199,7 @@ $( document ).ready(function() {
 
     } else {
       teamSeasonChart.destroy();
-      teamSeasonChart = await drawChart(ls);
+      await drawChart(ls);
 
       teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
       teamSeasonChart.options.scales.x.type = 'linear';
