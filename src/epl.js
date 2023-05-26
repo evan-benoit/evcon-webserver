@@ -102,13 +102,22 @@ async function drawChart(leagueSeason) {
             label: function(tooltipItem) {
                 const fixture = tooltipItem.dataset.data[tooltipItem.dataIndex]
                 if (fixture !== undefined) {
-                  return fixture.teamName + ": " + fixture.cumPoints + " points (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
+                  if (fixture.matchNumber == "0") { //no tooltip for origin point
+                    return null;
+                  } else {
+                    return fixture.teamName + ": " + fixture.cumPoints + " points (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
+                  }
                 }
             },
             title: function(tooltipItems) {
               const chart = tooltipItems[0].chart;
               const points = chart.getElementsAtEventForMode(chart._lastEvent, 'nearest', { intersect: true }, true);
               const raw = points[0].element.$context.raw;
+
+              if (raw.matchNumber == "0") {
+                return null;
+              }
+
               if (raw.teamName == raw.homeTeam) {
                 return raw.homeTeam.toUpperCase() + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore;
               } else {
