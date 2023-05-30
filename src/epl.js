@@ -136,10 +136,29 @@ async function drawChart(leagueSeason, chartMode) {
     teamSeasonChart.options.parsing.xAxisKey = 'timestamp';
     teamSeasonChart.options.scales.x.type = 'time';
     teamSeasonChart.options.scales.x.title.text = 'Date';
+
+    teamSeasonChart.options.parsing.yAxisKey = 'cumPoints';
+    teamSeasonChart.options.scales.y.title.text = 'Points';
+    teamSeasonChart.options.scales.y.reverse = false;
+    
   } else if (chartMode == "byMatch") {
     teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
     teamSeasonChart.options.scales.x.type = 'linear';
     teamSeasonChart.options.scales.x.title.text = 'Match Number';
+
+    teamSeasonChart.options.parsing.yAxisKey = 'cumPoints';
+    teamSeasonChart.options.scales.y.title.text = 'Points';
+    teamSeasonChart.options.scales.y.reverse = false;
+
+  } else if (chartMode == "bumpChart") {
+    teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
+    teamSeasonChart.options.scales.x.type = 'linear';
+    teamSeasonChart.options.scales.x.title.text = 'Match Number';
+
+    teamSeasonChart.options.parsing.yAxisKey = 'rank';
+    teamSeasonChart.options.scales.y.title.text = 'Rank';
+    teamSeasonChart.options.scales.y.reverse = true;
+
   }
 }
 
