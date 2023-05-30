@@ -6,7 +6,10 @@ Chart.register(autocolors);
 Chart.register(zoomPlugin);
 
 async function drawChart(leagueSeason, chartMode) {
-  let datasets = await getLeagueSeasons(leagueSeason); 
+  let data = await getLeagueSeasons(leagueSeason); 
+  let datasets = data.datasets;
+  lastFullMatchNumber = data.lastFullMatchNumber;
+
 
   //Calculate the max and min X and Y for the zoom feature
   let maxY =  Math.max(...datasets.map(ds =>
@@ -163,6 +166,7 @@ async function drawChart(leagueSeason, chartMode) {
 }
 
 var teamSeasonChart
+var lastFullMatchNumber
 
 //Code to run on page load
 $( document ).ready(function() {
@@ -188,7 +192,7 @@ $( document ).ready(function() {
   
   $("#topfive").click(function() {
     teamSeasonChart.data.datasets.forEach(function(ds) {
-      if (ds.label == 'Arsenal' || ds.label == 'Manchester City' || ds.label == 'Manchester United' || ds.label == 'Tottenham' || ds.label == 'Liverpool') {
+      if (ds.data[lastFullMatchNumber].rank <=5 ) {
         ds.hidden = false;
       } else {
         ds.hidden = true;
@@ -199,7 +203,7 @@ $( document ).ready(function() {
   
   $("#bottomfive").click(function() {
     teamSeasonChart.data.datasets.forEach(function(ds) {
-      if (ds.label == 'West Ham' || ds.label == 'Leeds' || ds.label == 'Everton' || ds.label == 'Southampton' || ds.label == 'Bournemouth') {
+      if (ds.data[lastFullMatchNumber].reverseRank >=-5 ) {
         ds.hidden = false;
       } else {
         ds.hidden = true;

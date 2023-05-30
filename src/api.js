@@ -29,6 +29,6 @@ export async function getLeagueSeasons(leagueSeason){
         console.log("No such document!");
     }
     
-    return docSnap.data().datasets;
+    return docSnap.data();
     
 }
