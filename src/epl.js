@@ -9,6 +9,8 @@ async function drawChart(leagueSeason, chartMode) {
   let data = await getLeagueSeasons(leagueSeason); 
   let datasets = data.datasets;
   lastFullMatchNumber = data.lastFullMatchNumber;
+  maxCumPoints = data.maxCumPoints;
+  numberOfTeams = data.numberOfTeams;
 
 
   //Calculate the max and min X and Y for the zoom feature
@@ -143,6 +145,8 @@ async function drawChart(leagueSeason, chartMode) {
     teamSeasonChart.options.parsing.yAxisKey = 'cumPoints';
     teamSeasonChart.options.scales.y.title.text = 'Points';
     teamSeasonChart.options.scales.y.reverse = false;
+    teamSeasonChart.options.scales.y.min = 0;
+    teamSeasonChart.options.scales.y.max = maxCumPoints + 1;
     
   } else if (chartMode == "byMatch") {
     teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
@@ -152,6 +156,8 @@ async function drawChart(leagueSeason, chartMode) {
     teamSeasonChart.options.parsing.yAxisKey = 'cumPoints';
     teamSeasonChart.options.scales.y.title.text = 'Points';
     teamSeasonChart.options.scales.y.reverse = false;
+    teamSeasonChart.options.scales.y.min = 0;
+    teamSeasonChart.options.scales.y.max = maxCumPoints + 1;
 
   } else if (chartMode == "bumpChart") {
     teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
@@ -161,12 +167,16 @@ async function drawChart(leagueSeason, chartMode) {
     teamSeasonChart.options.parsing.yAxisKey = 'rank';
     teamSeasonChart.options.scales.y.title.text = 'Rank';
     teamSeasonChart.options.scales.y.reverse = true;
+    teamSeasonChart.options.scales.y.min = 0;
+    teamSeasonChart.options.scales.y.max = numberOfTeams;
 
   }
 }
 
-var teamSeasonChart
-var lastFullMatchNumber
+var teamSeasonChart;
+var lastFullMatchNumber;
+var maxCumPoints;
+var numberOfTeams;
 
 //Code to run on page load
 $( document ).ready(function() {
