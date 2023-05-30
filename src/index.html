@@ -8,17 +8,31 @@
 <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>
-  <img src="/images/favicon.ico" width=40 height="40"><select id="leagueSeason" style="text-align: center; font-size: xx-large; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'">
-    <option value="39-2022">Premier League Standings 2022-2023</option>
-    <option value="254-2023"">NWSL Standings 2023</option>
-    <option value="135-2022"">Serie-A 2022-2023</option>
-    <option value="253-2023"">Major League Soccer 2023</option>
-  </select><br><br>
+  <table>
+    <tr>
+      <td rowspan="2" style="border: none; text-align: left; font-size: xxx-large; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'">
+        <div style="vertical-align:middle">TrophyPace<img src="/images/favicon.ico" width=60 height="60"></div>
+      </td>
+      <td>
+      <select id="leagueSeason" style="border: none; text-align: left; font-size: xx-large; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'">
+        <option value="39-2022">Premier League Standings 2022-2023</option>
+        <option value="254-2023"">NWSL Standings 2023</option>
+        <option value="135-2022"">Serie-A 2022-2023</option>
+        <option value="253-2023"">Major League Soccer 2023</option>
+      </select>
+       </td>
+    </tr>
+    <tr>
+      <td>
+        <select id="chartMode" style="border: none; text-align: left; font-size: large; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'">
+          <option value="byDate" selected>Points by Date</option>
+          <option value="byMatch">Points by Match</option>
+        </select>
+      </td>
+    </tr>
 
 
-  <!-- <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="topfive">top five</button> -->
-  <!-- <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="bottomfive">bottom five</button> -->
-  <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="toggle">toggle dates/matches</button>
+</table>
 
   <div style="width: 85%;"><canvas id="teamSeasons"></canvas></div>
   <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="showall">show all</button>

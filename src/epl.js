@@ -5,7 +5,7 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 Chart.register(autocolors);
 Chart.register(zoomPlugin);
 
-async function drawChart(leagueSeason) {
+async function drawChart(leagueSeason, chartMode) {
   let datasets = await getLeagueSeasons(leagueSeason); 
 
   //Calculate the max and min X and Y for the zoom feature
@@ -131,6 +131,16 @@ async function drawChart(leagueSeason) {
   };
 
   teamSeasonChart = new Chart(document.getElementById('teamSeasons'),chartTemplate);
+
+  if (chartMode == "byDate") {
+    teamSeasonChart.options.parsing.xAxisKey = 'timestamp';
+    teamSeasonChart.options.scales.x.type = 'time';
+    teamSeasonChart.options.scales.x.title.text = 'Date';
+  } else if (chartMode == "byMatch") {
+    teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
+    teamSeasonChart.options.scales.x.type = 'linear';
+    teamSeasonChart.options.scales.x.title.text = 'Match Number';
+  }
 }
 
 var teamSeasonChart
@@ -139,7 +149,8 @@ var teamSeasonChart
 $( document ).ready(function() {
 
   const ls = $("#leagueSeason").find(":selected").val();
-  drawChart(ls);
+  const cm = $("#chartMode").find(":selected").val();
+  drawChart(ls, cm);
 
 
   $("#showall").click(function() {
@@ -180,44 +191,28 @@ $( document ).ready(function() {
 
   $("#leagueSeason").change(async function() {
     const ls = $("#leagueSeason").find(":selected").val();
+    const cm = $("#chartMode").find(":selected").val();
+
 
     teamSeasonChart.destroy();
 
-    await drawChart(ls);
-
-    teamSeasonChart.options.parsing.xAxisKey = 'timestamp';
-    teamSeasonChart.options.scales.x.type = 'time';
-    teamSeasonChart.options.scales.x.title.text = 'Date';
+    await drawChart(ls, cm);
 
     teamSeasonChart.update();
   });
 
-  
-  $("#toggle").click(async function() {
+
+  $("#chartMode").change(async function() {
     const ls = $("#leagueSeason").find(":selected").val();
+    const cm = $("#chartMode").find(":selected").val();
 
-    if (teamSeasonChart.options.parsing.xAxisKey == 'matchNumber') {
-      teamSeasonChart.destroy();
-      await drawChart(ls);
-  
-      teamSeasonChart.options.parsing.xAxisKey = 'timestamp';
-      teamSeasonChart.options.scales.x.type = 'time';
-      teamSeasonChart.options.scales.x.title.text = 'Date';
+    teamSeasonChart.destroy();
 
-      teamSeasonChart.update();
+    await drawChart(ls, cm);
 
-    } else {
-      teamSeasonChart.destroy();
-      await drawChart(ls);
-
-      teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
-      teamSeasonChart.options.scales.x.type = 'linear';
-      teamSeasonChart.options.scales.x.title.text = 'Match Number';
-
-      teamSeasonChart.update();
-    }
+    teamSeasonChart.update();
   });
-
+  
 });
 
 
