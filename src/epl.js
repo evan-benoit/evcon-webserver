@@ -36,6 +36,7 @@ async function drawChart(leagueSeason, chartMode) {
     type: 'line',
     data: {datasets: datasets },
     options: {
+      pointHoverRadius: 5,
       // animation,
       parsing: {
         // xAxisKey: 'matchNumber',
