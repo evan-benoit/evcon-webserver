@@ -37,6 +37,30 @@ async function drawChart(leagueSeason, chartMode) {
     data: {datasets: datasets },
     options: {
       pointHoverRadius: 5,
+      //https://stackoverflow.com/questions/68353537/is-there-a-way-to-highlight-a-line-on-a-line-graph-with-hover
+      onHover: (e, activeEls, chart) => {
+        
+        //get the element that we're hovering over
+        const hoveredEl = chart.getElementsAtEventForMode(e, 'point', {
+          intersect: true
+        }, true)[0];
+
+        //Loop through all datasets.  If that dataset is translucent, remove the translucency.
+        chart.data.datasets.forEach((dataset) => {
+          dataset.backgroundColor = dataset.backgroundColor.length === 9 ? dataset.backgroundColor.slice(0, -2) : dataset.backgroundColor;
+          dataset.borderColor = dataset.borderColor.length === 9 ? dataset.borderColor.slice(0, -2) : dataset.borderColor;
+        });
+
+        //If we're hovering over something
+        if (hoveredEl != null) {
+          //loop through all datasets, and if they're not the one we're hovering over, add translucency via the alpha channel
+          chart.data.datasets.forEach((dataset, i) => {
+            dataset.backgroundColor = (hoveredEl.datasetIndex === i || dataset.backgroundColor.length === 9) ? dataset.backgroundColor : dataset.backgroundColor + '2D';
+            dataset.borderColor = (hoveredEl.datasetIndex === i || dataset.borderColor.length === 9) ? dataset.borderColor : dataset.borderColor + '2D';
+          });
+        }
+        chart.update();
+      },      
       // animation,
       parsing: {
         // xAxisKey: 'matchNumber',
