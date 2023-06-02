@@ -173,6 +173,10 @@ async function drawChart(leagueSeason, chartMode) {
     teamSeasonChart.options.scales.y.min = 0;
     teamSeasonChart.options.scales.y.max = maxCumPoints + 1;
     
+    teamSeasonChart.data.datasets.forEach((dataset) => {
+      dataset.stepped = true;
+    });
+
   } else if (chartMode == "byMatch") {
     teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
     teamSeasonChart.options.scales.x.type = 'linear';
@@ -183,6 +187,10 @@ async function drawChart(leagueSeason, chartMode) {
     teamSeasonChart.options.scales.y.reverse = false;
     teamSeasonChart.options.scales.y.min = 0;
     teamSeasonChart.options.scales.y.max = maxCumPoints + 1;
+
+    teamSeasonChart.data.datasets.forEach((dataset) => {
+      dataset.stepped = false;
+    });
 
   } else if (chartMode == "bumpChart") {
     teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
@@ -195,6 +203,10 @@ async function drawChart(leagueSeason, chartMode) {
     teamSeasonChart.options.scales.y.min = 0;
     teamSeasonChart.options.scales.y.max = numberOfTeams;
 
+
+    teamSeasonChart.data.datasets.forEach((dataset) => {
+      dataset.stepped = false;
+    });
   }
 }
 
