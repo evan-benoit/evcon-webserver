@@ -201,7 +201,7 @@ async function drawChart(leagueSeason, chartMode) {
     teamSeasonChart.options.scales.y.title.text = 'Rank';
     teamSeasonChart.options.scales.y.reverse = true;
     teamSeasonChart.options.scales.y.min = 0;
-    teamSeasonChart.options.scales.y.max = numberOfTeams;
+    teamSeasonChart.options.scales.y.max = numberOfTeams+1;
 
 
     teamSeasonChart.data.datasets.forEach((dataset) => {
