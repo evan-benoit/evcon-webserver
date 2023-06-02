@@ -1,0 +1,31 @@
+button {
+    font-family: 'Helvetica Neue','Helvetica', 'Arial', 'sans-serif'; 
+    background-color: white; 
+    border-width: 0.5;
+}
+
+.title {
+    border: none; 
+    text-align: left; 
+    font-size: xxx-large; 
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'
+}
+
+.bigSelectBox {
+    border: none;
+    text-align: left; 
+    font-size: xx-large; 
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'
+}
+
+.smallSelectBox {
+    border: none;
+    text-align: left;
+    font-size: large;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'
+}
+
+.normalText {
+    text-align: right;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'
+}
