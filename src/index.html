@@ -13,7 +13,7 @@
       <td rowspan="2" style="border: none; text-align: left; font-size: xxx-large; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'">
         <div style="vertical-align:middle">TrophyPace<img src="/images/favicon.ico" width=60 height="60"></div>
       </td>
-      <td>
+      <td colspan="2">
       <select id="leagueSeason" style="border: none; text-align: left; font-size: xx-large; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'">
         <option value="39-2022">Premier League Standings 2022-2023</option>
         <option value="254-2023"">NWSL Standings 2023</option>
@@ -30,16 +30,19 @@
           <option value="bumpChart">Rank by Match</option>
         </select>
       </td>
+      <td style="text-align: right;">
+        <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'; background-color: white; border-width: 0.5; " id="showall">Show All</button>
+        <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'; background-color: white; border-width: 0.5;" id="hideall">Hide All</button>
+        <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'; background-color: white; border-width: 0.5;" id="topfive">Top Five</button>
+        <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'; background-color: white; border-width: 0.5;" id="bottomfive">Bottom Five</button>
+      </td>
     </tr>
 
 
 </table>
 
   <div style="width: 85%;"><canvas id="teamSeasons"></canvas></div>
-  <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="showall">show all</button>
-  <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="hideall">hide all</button>
-  <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="topfive">top five</button>
-  <button style="font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'" id="bottomfive">bottom five</button>
+
   
 
   <div style="text-align: right; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'">Inspired by <a href="http://pennant-race.com/">pennant-race.com</a></div>
