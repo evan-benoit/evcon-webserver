@@ -218,6 +218,14 @@ var numberOfTeams;
 //Code to run on page load
 $( document ).ready(function() {
 
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  const param_ls = urlParams.get('leagueSeason');
+  if (param_ls != null) {
+    $('#leagueSeason').val(param_ls);   //  assign URL param to select field
+  }
+
+  
   const ls = $("#leagueSeason").find(":selected").val();
   const cm = $("#chartMode").find(":selected").val();
   drawChart(ls, cm);
@@ -262,6 +270,8 @@ $( document ).ready(function() {
   $("#leagueSeason").change(async function() {
     const ls = $("#leagueSeason").find(":selected").val();
     const cm = $("#chartMode").find(":selected").val();
+
+    window.history.replaceState(null, null, "?leagueSeason=" + ls);
 
 
     teamSeasonChart.destroy();
