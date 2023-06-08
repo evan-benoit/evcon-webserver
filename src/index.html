@@ -9,38 +9,38 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <table>
-    <tr>
-      <td rowspan="2">
-        <div class="title">TrophyPace<img src="/images/favicon.ico" width=60 height="60"></div>
-      </td>
-      <td colspan="2">
-      <select id="leagueSeason" class="bigSelectBox">
-        <option value="39-2022">Premier League Standings 2022-2023</option>
-        <option value="254-2023"">NWSL Standings 2023</option>
-        <option value="135-2022"">Serie-A 2022-2023</option>
-        <option value="253-2023"">Major League Soccer 2023</option>
-      </select>
-       </td>
-    </tr>
-    <tr>
-      <td>
+  <div style="display: table">
+    <div style="display: table-row">
+      <div style="display: table-cell">
+        <div class="title">TrophyPace<img src="/images/favicon.ico" width=60 height="60" style="vertical-align: text-bottom;"></div>
+      </div>
+      <div style="display: table-cell">
+        <select id="leagueSeason" class="bigSelectBox">
+          <option value="39-2022">Premier League Standings 2022-2023</option>
+          <option value="254-2023"">NWSL Standings 2023</option>
+          <option value="135-2022"">Serie-A 2022-2023</option>
+          <option value="253-2023"">Major League Soccer 2023</option>
+        </select>
+       </div>
+    </div>
+    <div style="display: table-row">
+      <div style="display: table-cell">
+        <button id="showall">Show All</button>
+        <button id="hideall">Hide All</button>
+        <button id="topfive">Top Five</button>
+        <button id="bottomfive">Bottom Five</button>        
+      </div>
+      <div  style="display: table-cell">
         <select id="chartMode" class="smallSelectBox">
           <option value="byDate" selected>Points by Date</option>
           <option value="byMatch">Points by Match</option>
           <option value="bumpChart">Rank by Match</option>
         </select>
-      </td>
-      <td style="text-align: right;">
-        <button id="showall">Show All</button>
-        <button id="hideall">Hide All</button>
-        <button id="topfive">Top Five</button>
-        <button id="bottomfive">Bottom Five</button>
-      </td>
-    </tr>
+      </div>
+    </div>
 
 
-</table>
+  </div>
 
   <div style="width: 85%;"><canvas id="teamSeasons"></canvas></div>
 
