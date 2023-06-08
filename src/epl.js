@@ -210,6 +210,20 @@ async function drawChart(leagueSeason, chartMode) {
   }
 }
 
+
+async function redrawChart() {
+  const ls = $("#leagueSeason").find(":selected").val();
+  const cm = $("#chartMode").find(":selected").val();
+
+  window.history.replaceState(null, null, "?leagueSeason=" + ls + "&chartMode=" + cm);
+
+  teamSeasonChart.destroy();
+
+  await drawChart(ls, cm);
+
+  teamSeasonChart.update();
+}
+
 var teamSeasonChart;
 var lastFullMatchNumber;
 var maxCumPoints;
@@ -272,30 +286,12 @@ $( document ).ready(function() {
   });
 
   $("#leagueSeason").change(async function() {
-    const ls = $("#leagueSeason").find(":selected").val();
-    const cm = $("#chartMode").find(":selected").val();
-
-    window.history.replaceState(null, null, "?leagueSeason=" + ls + "&chartMode=" + cm);
-
-    teamSeasonChart.destroy();
-
-    await drawChart(ls, cm);
-
-    teamSeasonChart.update();
+    redrawChart();
   });
 
 
   $("#chartMode").change(async function() {
-    const ls = $("#leagueSeason").find(":selected").val();
-    const cm = $("#chartMode").find(":selected").val();
-
-    window.history.replaceState(null, null, "?leagueSeason=" + ls + "&chartMode=" + cm);
-
-    teamSeasonChart.destroy();
-
-    await drawChart(ls, cm);
-
-    teamSeasonChart.update();
+    redrawChart();
   });
   
 });
