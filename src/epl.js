@@ -225,6 +225,10 @@ $( document ).ready(function() {
     $('#leagueSeason').val(param_ls);   //  assign URL param to select field
   }
 
+  const param_cm = urlParams.get('chartMode');
+  if (param_cm != null) {
+    $('#chartMode').val(param_cm);   //  assign URL param to select field
+  }
   
   const ls = $("#leagueSeason").find(":selected").val();
   const cm = $("#chartMode").find(":selected").val();
@@ -271,8 +275,7 @@ $( document ).ready(function() {
     const ls = $("#leagueSeason").find(":selected").val();
     const cm = $("#chartMode").find(":selected").val();
 
-    window.history.replaceState(null, null, "?leagueSeason=" + ls);
-
+    window.history.replaceState(null, null, "?leagueSeason=" + ls + "&chartMode=" + cm);
 
     teamSeasonChart.destroy();
 
@@ -285,6 +288,8 @@ $( document ).ready(function() {
   $("#chartMode").change(async function() {
     const ls = $("#leagueSeason").find(":selected").val();
     const cm = $("#chartMode").find(":selected").val();
+
+    window.history.replaceState(null, null, "?leagueSeason=" + ls + "&chartMode=" + cm);
 
     teamSeasonChart.destroy();
 
