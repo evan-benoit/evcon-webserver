@@ -160,54 +160,55 @@ async function drawChart(leagueSeason, chartMode) {
     }
   };
 
-  teamSeasonChart = new Chart(document.getElementById('teamSeasons'),chartTemplate);
 
   if (chartMode == "byDate") {
-    teamSeasonChart.options.parsing.xAxisKey = 'timestamp';
-    teamSeasonChart.options.scales.x.type = 'time';
-    teamSeasonChart.options.scales.x.title.text = 'Date';
+    chartTemplate.options.parsing.xAxisKey = 'timestamp';
+    chartTemplate.options.scales.x.type = 'time';
+    chartTemplate.options.scales.x.title.text = 'Date';
 
-    teamSeasonChart.options.parsing.yAxisKey = 'cumPoints';
-    teamSeasonChart.options.scales.y.title.text = 'Points';
-    teamSeasonChart.options.scales.y.reverse = false;
-    teamSeasonChart.options.scales.y.min = 0;
-    teamSeasonChart.options.scales.y.max = maxCumPoints + 1;
+    chartTemplate.options.parsing.yAxisKey = 'cumPoints';
+    chartTemplate.options.scales.y.title.text = 'Points';
+    chartTemplate.options.scales.y.reverse = false;
+    chartTemplate.options.scales.y.min = 0;
+    chartTemplate.options.scales.y.max = maxCumPoints + 1;
     
-    teamSeasonChart.data.datasets.forEach((dataset) => {
+    chartTemplate.data.datasets.forEach((dataset) => {
       dataset.stepped = true;
     });
 
   } else if (chartMode == "byMatch") {
-    teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
-    teamSeasonChart.options.scales.x.type = 'linear';
-    teamSeasonChart.options.scales.x.title.text = 'Match Number';
+    chartTemplate.options.parsing.xAxisKey = 'matchNumber';
+    chartTemplate.options.scales.x.type = 'linear';
+    chartTemplate.options.scales.x.title.text = 'Match Number';
 
-    teamSeasonChart.options.parsing.yAxisKey = 'cumPoints';
-    teamSeasonChart.options.scales.y.title.text = 'Points';
-    teamSeasonChart.options.scales.y.reverse = false;
-    teamSeasonChart.options.scales.y.min = 0;
-    teamSeasonChart.options.scales.y.max = maxCumPoints + 1;
+    chartTemplate.options.parsing.yAxisKey = 'cumPoints';
+    chartTemplate.options.scales.y.title.text = 'Points';
+    chartTemplate.options.scales.y.reverse = false;
+    chartTemplate.options.scales.y.min = 0;
+    chartTemplate.options.scales.y.max = maxCumPoints + 1;
 
-    teamSeasonChart.data.datasets.forEach((dataset) => {
+    chartTemplate.data.datasets.forEach((dataset) => {
       dataset.stepped = false;
     });
 
   } else if (chartMode == "bumpChart") {
-    teamSeasonChart.options.parsing.xAxisKey = 'matchNumber';
-    teamSeasonChart.options.scales.x.type = 'linear';
-    teamSeasonChart.options.scales.x.title.text = 'Match Number';
+    chartTemplate.options.parsing.xAxisKey = 'matchNumber';
+    chartTemplate.options.scales.x.type = 'linear';
+    chartTemplate.options.scales.x.title.text = 'Match Number';
 
-    teamSeasonChart.options.parsing.yAxisKey = 'rank';
-    teamSeasonChart.options.scales.y.title.text = 'Rank';
-    teamSeasonChart.options.scales.y.reverse = true;
-    teamSeasonChart.options.scales.y.min = 0;
-    teamSeasonChart.options.scales.y.max = numberOfTeams+1;
+    chartTemplate.options.parsing.yAxisKey = 'rank';
+    chartTemplate.options.scales.y.title.text = 'Rank';
+    chartTemplate.options.scales.y.reverse = true;
+    chartTemplate.options.scales.y.min = 0;
+    chartTemplate.options.scales.y.max = numberOfTeams+1;
 
-
-    teamSeasonChart.data.datasets.forEach((dataset) => {
+    chartTemplate.data.datasets.forEach((dataset) => {
       dataset.stepped = false;
     });
   }
+
+  teamSeasonChart = new Chart(document.getElementById('teamSeasons'),chartTemplate);
+
 }
 
 
