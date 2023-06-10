@@ -233,6 +233,11 @@ var numberOfTeams;
 //Code to run on page load
 $( document ).ready(function() {
 
+  //redirect to https if we're on http
+  if (location.protocol !== 'https:') {
+    location.replace(`https:${location.href.substring(location.protocol.length)}`);
+  } 
+
   const urlParams = new URLSearchParams(window.location.search);
   
   const param_ls = urlParams.get('leagueSeason');
