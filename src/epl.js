@@ -233,8 +233,8 @@ var numberOfTeams;
 //Code to run on page load
 $( document ).ready(function() {
 
-  //redirect to https if we're on http
-  if (location.protocol !== 'https:') {
+  //redirect to https if we're on http and pointed to trophyplace.com
+  if (location.protocol !== 'https:' && location.href.match('trophyplace') ) {
     location.replace(`https:${location.href.substring(location.protocol.length)}`);
   } 
 
