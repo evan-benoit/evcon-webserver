@@ -34,6 +34,11 @@ async function drawChart(leagueSeason, chartMode) {
     type: 'line',
     data: {datasets: datasets },
     options: {
+      elements: {
+        point: {
+          pointRadius: 4
+        }
+      },
       pointHoverRadius: 5,
       //https://stackoverflow.com/questions/68353537/is-there-a-way-to-highlight-a-line-on-a-line-graph-with-hover
       onHover: (e, activeEls, chart) => {
