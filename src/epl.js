@@ -1,8 +1,6 @@
 import { getLeagueSeasons } from './api'
-import autocolors from 'chartjs-plugin-autocolors';
 import zoomPlugin from 'chartjs-plugin-zoom';
 
-Chart.register(autocolors);
 Chart.register(zoomPlugin);
 
 async function drawChart(leagueSeason, chartMode) {
@@ -114,7 +112,6 @@ async function drawChart(leagueSeason, chartMode) {
             mode: 'xy',
           }
         },
-        autocolors,
         tooltip: {
           mode: 'index',
           intersect: true,
