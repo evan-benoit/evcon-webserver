@@ -66,9 +66,7 @@ async function drawChart(leagueSeason, chartMode) {
         }
         chart.update();
       },      
-      // animation,
       parsing: {
-        // xAxisKey: 'matchNumber',
         xAxisKey: 'timestamp',
         yAxisKey: 'cumPoints'
       },
@@ -81,7 +79,6 @@ async function drawChart(leagueSeason, chartMode) {
           }
         },
         x: {
-          // type: "linear",
           type: "time",
           parsing: true,
           title: {
