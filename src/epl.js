@@ -39,7 +39,7 @@ async function drawChart(leagueSeason, chartMode) {
         }
       },
       onClick(e) {
-        console.log(e.type);
+        i = 1; //needed for zoom to work
       },
       pointHoverRadius: 5,
       //https://stackoverflow.com/questions/68353537/is-there-a-way-to-highlight-a-line-on-a-line-graph-with-hover
