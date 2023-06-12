@@ -11,23 +11,7 @@ async function drawChart(leagueSeason, chartMode) {
   numberOfTeams = data.numberOfTeams;
 
 
-  //Calculate the max and min X and Y for the zoom feature
-  let maxY =  Math.max(...datasets.map(ds =>
-    Math.max(...ds.data.map(d => d.cumPoints))
-  ));
-
-  let minY =  Math.min(...datasets.map(ds =>
-    Math.min(...ds.data.map(d => d.cumPoints))
-  ));
-
-
-  let maxX =  Math.max(...datasets.map(ds =>
-    Math.max(...ds.data.map(d => d.timestamp))
-  ));
-
-  let minX =  Math.min(...datasets.map(ds =>
-    Math.min(...ds.data.map(d => d.timestamp))
-  ));
+  
 
 
   var chartTemplate = {
@@ -103,8 +87,8 @@ async function drawChart(leagueSeason, chartMode) {
               enabled: true
           },
           limits: {
-            x: {min: minX, max: maxX},
-            y: {min: minY, max: maxY + 5}
+            x: {min: 0, max: 0},
+            y: {min: 0, max: 0}
           },
           zoom: {
             wheel: {
@@ -178,6 +162,19 @@ async function drawChart(leagueSeason, chartMode) {
       dataset.stepped = true;
     });
 
+    //Calculate the max and min X and Y for the zoom feature
+    chartTemplate.options.plugins.zoom.limits.y.min =  0;
+
+    chartTemplate.options.plugins.zoom.limits.y.max =  maxCumPoints + 1
+
+    chartTemplate.options.plugins.zoom.limits.x.min =  Math.min(...datasets.map(ds =>
+      Math.min(...ds.data.map(d => d.timestamp))
+    ));
+
+    chartTemplate.options.plugins.zoom.limits.x.max =  Math.max(...datasets.map(ds =>
+      Math.max(...ds.data.map(d => d.timestamp))
+    ));
+    
   } else if (chartMode == "byMatch") {
     chartTemplate.options.parsing.xAxisKey = 'matchNumber';
     chartTemplate.options.scales.x.type = 'linear';
@@ -193,6 +190,20 @@ async function drawChart(leagueSeason, chartMode) {
       dataset.stepped = false;
     });
 
+    //Calculate the max and min X and Y for the zoom feature
+    chartTemplate.options.plugins.zoom.limits.y.min =  0;
+
+    chartTemplate.options.plugins.zoom.limits.y.max =  maxCumPoints + 1;
+
+    chartTemplate.options.plugins.zoom.limits.x.min =  Math.min(...datasets.map(ds =>
+      Math.min(...ds.data.map(d => d.matchNumber))
+    ));
+
+    chartTemplate.options.plugins.zoom.limits.x.max =  Math.max(...datasets.map(ds =>
+      Math.max(...ds.data.map(d => d.matchNumber))
+    )) + 2;
+
+
   } else if (chartMode == "bumpChart") {
     chartTemplate.options.parsing.xAxisKey = 'matchNumber';
     chartTemplate.options.scales.x.type = 'linear';
@@ -207,6 +218,20 @@ async function drawChart(leagueSeason, chartMode) {
     chartTemplate.data.datasets.forEach((dataset) => {
       dataset.stepped = false;
     });
+
+    //Calculate the max and min X and Y for the zoom feature
+    chartTemplate.options.plugins.zoom.limits.y.min =  0;
+    
+    chartTemplate.options.plugins.zoom.limits.y.max =  numberOfTeams + 1;
+
+    chartTemplate.options.plugins.zoom.limits.x.min =  Math.min(...datasets.map(ds =>
+      Math.min(...ds.data.map(d => d.matchNumber))
+    ));
+    
+    chartTemplate.options.plugins.zoom.limits.x.max =  Math.max(...datasets.map(ds =>
+      Math.max(...ds.data.map(d => d.matchNumber))
+    )) + 2;
+
   }
 
   teamSeasonChart = new Chart(document.getElementById('teamSeasons'),chartTemplate);
