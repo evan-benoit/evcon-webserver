@@ -318,6 +318,10 @@ $( document ).ready(function() {
    teamSeasonChart.update();
   });
 
+  $("#resetzoom").click(function() {
+   teamSeasonChart.resetZoom();
+  });
+
   $("#leagueSeason").change(async function() {
     redrawChart();
   });
