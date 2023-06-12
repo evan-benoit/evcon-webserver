@@ -11,7 +11,22 @@ async function drawChart(leagueSeason, chartMode) {
   numberOfTeams = data.numberOfTeams;
 
 
-  
+  const zoomOptions = {
+    limits: {
+      x: {min: 0, max: 0},
+      y: {min: 0, max: 0}
+    },
+    pan: {
+      enabled: true,
+      modifierKey: 'ctrl',
+    },
+    zoom: {
+      drag: {
+        enabled: true
+      },
+      mode: 'xy',
+    },
+  };
 
 
   var chartTemplate = {
@@ -22,6 +37,9 @@ async function drawChart(leagueSeason, chartMode) {
         point: {
           pointRadius: 4
         }
+      },
+      onClick(e) {
+        console.log(e.type);
       },
       pointHoverRadius: 5,
       //https://stackoverflow.com/questions/68353537/is-there-a-way-to-highlight-a-line-on-a-line-graph-with-hover
@@ -82,25 +100,7 @@ async function drawChart(leagueSeason, chartMode) {
           position: 'bottom',
           align: 'start'
         },
-        zoom: {
-          pan: {
-              enabled: true
-          },
-          limits: {
-            x: {min: 0, max: 0},
-            y: {min: 0, max: 0}
-          },
-          zoom: {
-            wheel: {
-              enabled: true,
-              speed: .03,
-            },
-            pinch: {
-              enabled: true
-            },
-            mode: 'xy',
-          }
-        },
+        zoom: zoomOptions,
         tooltip: {
           mode: 'index',
           intersect: true,
