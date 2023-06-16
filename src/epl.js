@@ -102,7 +102,7 @@ async function drawChart(leagueSeason, chartMode) {
           mode: 'index',
           intersect: true,
           enabled: true,
-          postition: 'nearest',
+          position: 'nearest',
           itemSort: function(a, b) {
             if (a.raw.rank > b.raw.rank) {
               return 1;
