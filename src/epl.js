@@ -258,7 +258,7 @@ var numberOfTeams;
 $( document ).ready(function() {
 
   //redirect to https if we're on http and pointed to trophyplace.com
-  if (location.protocol !== 'https:' && location.href.match('trophyplace') ) {
+  if (location.protocol !== 'https:' && location.href.match('trophypace') ) {
     location.replace(`https:${location.href.substring(location.protocol.length)}`);
   } 
 
