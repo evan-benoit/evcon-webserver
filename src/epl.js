@@ -18,7 +18,7 @@ async function drawChart(leagueSeason, chartMode) {
     },
     pan: {
       enabled: true,
-      modifierKey: 'ctrl',
+      modifierKey: 'alt',
     },
     zoom: {
       drag: {
