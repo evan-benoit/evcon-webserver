@@ -255,19 +255,6 @@ $( document ).ready(function() {
     location.replace(`https:${location.href.substring(location.protocol.length)}`);
   } 
 
-  const urlParams = new URLSearchParams(window.location.search);
-  
-  const param_ls = urlParams.get('leagueSeason');
-  if (param_ls != null) {
-    $('#leagueSeason').val(param_ls);   //  assign URL param to select field
-  }
-
-  const param_cm = urlParams.get('chartMode');
-  if (param_cm != null) {
-    $('#chartMode').val(param_cm);   //  assign URL param to select field
-  }
-  
-
 
   $("#showall").click(function() {
     teamSeasonChart.data.datasets.forEach(function(ds) {
