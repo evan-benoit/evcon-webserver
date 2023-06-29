@@ -197,12 +197,17 @@ async function redrawChart() {
 async function drawIndex() {
   index = await getIndex();
   console.log(index);
-  $('#country').append('<option value="null" selected=true></option>');
 
-  for (const country in index)
-    $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
+  for (const country in index) {
+    if (country == 'uk') {
+      $('#country').append('<option value="' + country + '" selected>' + index[country].display + '</option>');
+    } else {
+      $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
+    }
 
-  
+  }
+
+  drawLeagues();
 }
 
 function drawLeagues() {
@@ -264,11 +269,10 @@ $( document ).ready(function() {
   }
   
 
-  drawIndex();
+  // drawLeagues();
 
-  const ls = $("#leagueSeason").find(":selected").val();
-  const cm = $("#chartMode").find(":selected").val();
-  drawChart(ls, cm);
+  // $("#league").children('[value="39"]').attr('selected', true);
+
 
 
   $("#showall").click(function() {
@@ -327,6 +331,10 @@ $( document ).ready(function() {
   $("#season").change(async function() {
     redrawChart();
   });
+
+
+
+  drawIndex();
 });
 
 
