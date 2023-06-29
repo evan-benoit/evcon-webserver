@@ -268,11 +268,6 @@ $( document ).ready(function() {
   }
   
 
-  // drawLeagues();
-
-  // $("#league").children('[value="39"]').attr('selected', true);
-
-
 
   $("#showall").click(function() {
     teamSeasonChart.data.datasets.forEach(function(ds) {
@@ -308,10 +303,6 @@ $( document ).ready(function() {
       }
    });
    teamSeasonChart.update();
-  });
-
-  $("#leagueSeason").change(async function() {
-    redrawChart();
   });
 
 
