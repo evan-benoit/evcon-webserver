@@ -198,7 +198,7 @@ async function drawIndex() {
   index = await getIndex();
   console.log(index);
 
-  for (const country in index) {
+  for (const country of Object.keys(index).sort()) {
     if (country == 'uk') {
       $('#country').append('<option value="' + country + '" selected>' + index[country].display + '</option>');
     } else {
@@ -231,7 +231,7 @@ function drawSeasons() {
   country = $("#country").find(":selected").val();
   league = $("#league").find(":selected").val();
 
-  for (const i in index[country].leagues[league].seasons) {
+  for (const i in index[country].leagues[league].seasons.sort().reverse()) {
     $('#season').append('<option value="' + index[country].leagues[league].seasons[i] + '">' + index[country].leagues[league].seasons[i] + '</option>');
   }
 
