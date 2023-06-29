@@ -1,4 +1,4 @@
-import { getLeagueSeasons } from './api'
+import { getIndex, getLeagueSeasons } from './api'
 import zoomPlugin from 'chartjs-plugin-zoom';
 
 Chart.register(zoomPlugin);
@@ -249,6 +249,18 @@ async function redrawChart() {
   teamSeasonChart.update();
 }
 
+async function drawIndex() {
+  index = await getIndex();
+  console.log(index);
+  $('#country').append('<option value="null" selected=true></option>');
+
+  for (const country in index)
+    $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
+
+
+
+}
+
 var teamSeasonChart;
 var lastFullMatchNumber;
 var maxCumPoints;
@@ -274,6 +286,9 @@ $( document ).ready(function() {
     $('#chartMode').val(param_cm);   //  assign URL param to select field
   }
   
+
+  drawIndex();
+
   const ls = $("#leagueSeason").find(":selected").val();
   const cm = $("#chartMode").find(":selected").val();
   drawChart(ls, cm);

@@ -32,3 +32,18 @@ export async function getLeagueSeasons(leagueSeason){
     return docSnap.data();
     
 }
+
+
+export async function getIndex(){
+    const docRef = doc(db, "index", "latest");
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+    } else {
+        console.log("No such document!");
+    }
+    
+    return docSnap.data();
+    
+}
