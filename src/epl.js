@@ -206,25 +206,33 @@ async function drawIndex() {
 }
 
 function drawLeagues() {
-  $('#league').find('option:not(:first)').remove();
+  $('#league').find('option').remove();
 
   country = $("#country").find(":selected").val();
 
-  for (const league in index[country].leagues)
+  for (const league in index[country].leagues) {
     $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
+  }
 
+  $('#league')[0].selectedIndex = 0;
+
+  drawSeasons();
 }
 
 
 function drawSeasons() {
-  $('#season').find('option:not(:first)').remove();
+  $('#season').find('option').remove();
 
   country = $("#country").find(":selected").val();
   league = $("#league").find(":selected").val();
 
-  for (const i in index[country].leagues[league].seasons)
+  for (const i in index[country].leagues[league].seasons) {
     $('#season').append('<option value="' + index[country].leagues[league].seasons[i] + '">' + index[country].leagues[league].seasons[i] + '</option>');
+  }
 
+  $('#league')[0].selectedIndex = 0;
+
+  redrawChart();
 }
 
 
