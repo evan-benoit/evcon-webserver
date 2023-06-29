@@ -19,8 +19,8 @@ const analytics = getAnalytics(app);
 
 const db = getFirestore(app);
 
-export async function getLeagueSeasons(leagueSeason){
-    const docRef = doc(db, "leagueSeasons", leagueSeason);
+export async function getSeason(countryCode, leagueID, season){
+    const docRef = doc(db, "countries/" + countryCode + "/leagues/" + leagueID + "/seasons", season);
     const docSnap = await getDoc(docRef);
     
     if (docSnap.exists()) {

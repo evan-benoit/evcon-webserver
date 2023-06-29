@@ -1,10 +1,10 @@
-import { getIndex, getLeagueSeasons } from './api'
+import { getIndex, getSeason } from './api'
 import zoomPlugin from 'chartjs-plugin-zoom';
 
 Chart.register(zoomPlugin);
 
-async function drawChart(leagueSeason, chartMode) {
-  let data = await getLeagueSeasons(leagueSeason); 
+async function drawChart(countryCode, leagueID, season, chartMode) {
+  let data = await getSeason(countryCode, leagueID, season); 
   let datasets = data.datasets;
   lastFullMatchNumber = data.lastFullMatchNumber;
   maxCumPoints = data.maxCumPoints;
@@ -237,14 +237,19 @@ async function drawChart(leagueSeason, chartMode) {
 
 
 async function redrawChart() {
-  const ls = $("#leagueSeason").find(":selected").val();
-  const cm = $("#chartMode").find(":selected").val();
+  const countryCode = $("#country").find(":selected").val();
+  const leagueID = $("#league").find(":selected").val();
+  const season = $("#season").find(":selected").val();
+  const chartMode = $("#chartMode").find(":selected").val();
 
-  window.history.replaceState(null, null, "?leagueSeason=" + ls + "&chartMode=" + cm);
+  //[evtodo] redo this
+  //window.history.replaceState(null, null, "?leagueSeason=" + ls + "&chartMode=" + cm);
 
-  teamSeasonChart.destroy();
+  if (teamSeasonChart) {
+    teamSeasonChart.destroy();
+  }
 
-  await drawChart(ls, cm);
+  await drawChart(countryCode, leagueID, season, chartMode);
 
   teamSeasonChart.update();
 }
@@ -272,6 +277,13 @@ function drawLeagues() {
 
 
 function drawSeasons() {
+  $('#season').find('option:not(:first)').remove();
+
+  country = $("#country").find(":selected").val();
+  league = $("#league").find(":selected").val();
+
+  for (const i in index[country].leagues[league].seasons)
+    $('#season').append('<option value="' + index[country].leagues[league].seasons[i] + '">' + index[country].leagues[league].seasons[i] + '</option>');
 
 }
 
@@ -366,6 +378,10 @@ $( document ).ready(function() {
   
   $("#league").change(async function() {
     drawSeasons();
+  });
+
+  $("#season").change(async function() {
+    redrawChart();
   });
 });
 
