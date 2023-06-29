@@ -1,7 +1,5 @@
 import { getIndex, getSeason } from './api'
-import zoomPlugin from 'chartjs-plugin-zoom';
 
-Chart.register(zoomPlugin);
 
 async function drawChart(countryCode, leagueID, season, chartMode) {
   let data = await getSeason(countryCode, leagueID, season); 
@@ -11,22 +9,6 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
   numberOfTeams = data.numberOfTeams;
 
 
-  const zoomOptions = {
-    limits: {
-      x: {min: 0, max: 0},
-      y: {min: 0, max: 0}
-    },
-    pan: {
-      enabled: true,
-      modifierKey: 'alt',
-    },
-    zoom: {
-      drag: {
-        enabled: true
-      },
-      mode: 'xy',
-    },
-  };
 
 
   var chartTemplate = {
@@ -97,7 +79,6 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
           position: 'bottom',
           align: 'start'
         },
-        zoom: zoomOptions,
         tooltip: {
           mode: 'index',
           intersect: true,
@@ -158,19 +139,6 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
     chartTemplate.data.datasets.forEach((dataset) => {
       dataset.stepped = true;
     });
-
-    //Calculate the max and min X and Y for the zoom feature
-    chartTemplate.options.plugins.zoom.limits.y.min =  0;
-
-    chartTemplate.options.plugins.zoom.limits.y.max =  maxCumPoints + 1
-
-    chartTemplate.options.plugins.zoom.limits.x.min =  Math.min(...datasets.map(ds =>
-      Math.min(...ds.data.map(d => d.timestamp))
-    ));
-
-    chartTemplate.options.plugins.zoom.limits.x.max =  Math.max(...datasets.map(ds =>
-      Math.max(...ds.data.map(d => d.timestamp))
-    ));
     
   } else if (chartMode == "byMatch") {
     chartTemplate.options.parsing.xAxisKey = 'matchNumber';
@@ -187,20 +155,6 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
       dataset.stepped = false;
     });
 
-    //Calculate the max and min X and Y for the zoom feature
-    chartTemplate.options.plugins.zoom.limits.y.min =  0;
-
-    chartTemplate.options.plugins.zoom.limits.y.max =  maxCumPoints + 1;
-
-    chartTemplate.options.plugins.zoom.limits.x.min =  Math.min(...datasets.map(ds =>
-      Math.min(...ds.data.map(d => d.matchNumber))
-    ));
-
-    chartTemplate.options.plugins.zoom.limits.x.max =  Math.max(...datasets.map(ds =>
-      Math.max(...ds.data.map(d => d.matchNumber))
-    )) + 2;
-
-
   } else if (chartMode == "bumpChart") {
     chartTemplate.options.parsing.xAxisKey = 'matchNumber';
     chartTemplate.options.scales.x.type = 'linear';
@@ -215,20 +169,6 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
     chartTemplate.data.datasets.forEach((dataset) => {
       dataset.stepped = false;
     });
-
-    //Calculate the max and min X and Y for the zoom feature
-    chartTemplate.options.plugins.zoom.limits.y.min =  0;
-    
-    chartTemplate.options.plugins.zoom.limits.y.max =  numberOfTeams + 1;
-
-    chartTemplate.options.plugins.zoom.limits.x.min =  Math.min(...datasets.map(ds =>
-      Math.min(...ds.data.map(d => d.matchNumber))
-    ));
-    
-    chartTemplate.options.plugins.zoom.limits.x.max =  Math.max(...datasets.map(ds =>
-      Math.max(...ds.data.map(d => d.matchNumber))
-    )) + 2;
-
   }
 
   teamSeasonChart = new Chart(document.getElementById('teamSeasons'),chartTemplate);
@@ -357,10 +297,6 @@ $( document ).ready(function() {
       }
    });
    teamSeasonChart.update();
-  });
-
-  $("#resetzoom").click(function() {
-   teamSeasonChart.resetZoom();
   });
 
   $("#leagueSeason").change(async function() {
