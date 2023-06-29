@@ -182,8 +182,7 @@ async function redrawChart() {
   const season = $("#season").find(":selected").val();
   const chartMode = $("#chartMode").find(":selected").val();
 
-  //[evtodo] redo this
-  //window.history.replaceState(null, null, "?leagueSeason=" + ls + "&chartMode=" + cm);
+  window.history.replaceState(null, null, "?country=" + countryCode + "&league=" + leagueID + "&season=" + season + "&chartMode=" + chartMode);
 
   if (teamSeasonChart) {
     teamSeasonChart.destroy();
