@@ -235,7 +235,7 @@ function drawSeasons() {
     $('#season').append('<option value="' + index[country].leagues[league].seasons[i] + '">' + index[country].leagues[league].seasons[i] + '</option>');
   }
 
-  $('#league')[0].selectedIndex = 0;
+  $('#season')[0].selectedIndex = 0;
 
   redrawChart();
 }
