@@ -257,10 +257,27 @@ async function drawIndex() {
   for (const country in index)
     $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
 
+  
+}
 
+function drawLeagues() {
+  $('#league').find('option:not(:first)').remove();
+
+  country = $("#country").find(":selected").val();
+
+  for (const league in index[country].leagues)
+    $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
 
 }
 
+
+function drawSeasons() {
+
+}
+
+
+
+var index;
 var teamSeasonChart;
 var lastFullMatchNumber;
 var maxCumPoints;
@@ -343,6 +360,13 @@ $( document ).ready(function() {
     redrawChart();
   });
   
+  $("#country").change(async function() {
+    drawLeagues();
+  });
+  
+  $("#league").change(async function() {
+    drawSeasons();
+  });
 });
 
 
