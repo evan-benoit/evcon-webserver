@@ -245,7 +245,7 @@ async function drawCountries() {
 function drawLeagues() {
   $('#league').find('option').remove();
 
-  country = $("#country").find(":selected").val();
+  var country = $("#country").find(":selected").val();
 
   for (const league in index[country].leagues) {
     $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
@@ -257,8 +257,8 @@ function drawLeagues() {
 function drawSeasons() {
   $('#season').find('option').remove();
 
-  country = $("#country").find(":selected").val();
-  league = $("#league").find(":selected").val();
+  var country = $("#country").find(":selected").val();
+  var league = $("#league").find(":selected").val();
 
   for (const i in index[country].leagues[league].seasons.sort().reverse()) {
     $('#season').append('<option value="' + index[country].leagues[league].seasons[i] + '">' + index[country].leagues[league].seasons[i] + '</option>');
