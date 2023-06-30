@@ -193,20 +193,53 @@ async function redrawChart() {
   teamSeasonChart.update();
 }
 
-async function drawIndex() {
+async function drawCountries() {
   index = await getIndex();
   console.log(index);
 
   for (const country of Object.keys(index).sort()) {
-    if (country == 'uk') {
-      $('#country').append('<option value="' + country + '" selected>' + index[country].display + '</option>');
-    } else {
-      $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
-    }
-
+    $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
   }
 
+  if (countryParam != null) {
+    $('#country').val(countryParam);   
+  } else {
+    $('#country').val("uk");
+  }
+  
   drawLeagues();
+
+  $("#chartMode").change(async function() {
+    redrawChart();
+  });
+  
+  $("#country").change(async function() {
+    drawLeagues();
+    redrawChart();
+  });
+  
+  $("#league").change(async function() {
+    drawSeasons();
+    redrawChart();
+  });
+
+  $("#season").change(async function() {
+    redrawChart();
+  });  
+
+  if (leagueParam != null) {
+    $('#league').val(leagueParam);   
+  } else {
+    $('#league').val("39");
+  }
+
+  if (seasonParam != null) {
+    $('#season').val(seasonParam);   
+  } else {
+    $('#season')[0].selectedIndex = 0;
+  }
+
+  redrawChart();
 }
 
 function drawLeagues() {
@@ -217,9 +250,6 @@ function drawLeagues() {
   for (const league in index[country].leagues) {
     $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
   }
-
-  $('#league')[0].selectedIndex = 0;
-
   drawSeasons();
 }
 
@@ -234,9 +264,8 @@ function drawSeasons() {
     $('#season').append('<option value="' + index[country].leagues[league].seasons[i] + '">' + index[country].leagues[league].seasons[i] + '</option>');
   }
 
-  $('#season')[0].selectedIndex = 0;
 
-  redrawChart();
+
 }
 
 
@@ -247,8 +276,23 @@ var lastFullMatchNumber;
 var maxCumPoints;
 var numberOfTeams;
 
+const urlParams = new URLSearchParams(window.location.search);
+const countryParam = urlParams.get('country');
+const leagueParam = urlParams.get('league');
+const seasonParam = urlParams.get('season');
+const chartModeParam = urlParams.get('chartMode');
+
+
 //Code to run on page load
 $( document ).ready(function() {
+
+  if (chartModeParam != null) {
+    $('#chartMode').val(chartModeParam);   
+  } else {
+    $('#chartMode').val("byMatch"); 
+  }
+
+
 
   //redirect to https if we're on http and pointed to trophyplace.com
   if (location.protocol !== 'https:' && location.href.match('trophypace') ) {
@@ -293,25 +337,13 @@ $( document ).ready(function() {
   });
 
 
-  $("#chartMode").change(async function() {
-    redrawChart();
-  });
-  
-  $("#country").change(async function() {
-    drawLeagues();
-  });
-  
-  $("#league").change(async function() {
-    drawSeasons();
-  });
-
-  $("#season").change(async function() {
-    redrawChart();
-  });
 
 
 
-  drawIndex();
+  drawCountries();
+
+
+
 });
 
 
