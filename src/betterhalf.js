@@ -28,14 +28,14 @@ $(document).ready(function(){
         $("#games").empty();
         //loop through the games
         for (var i = 0; i < data.response.length; i++){
-            //add a row to the table
-            $("#games").append("<tr>");
-            //add the home team to the table
-            $("#games").append("<td>" + data.response[i].teams.home.name + "</td>");
-            //add the away team to the table
-            $("#games").append("<td>" + data.response[i].teams.away.name + "</td>");
-            //close the row
-            $("#games").append("</tr>");
+            //build the row
+            //using example from https://stackoverflow.com/questions/17724017/using-jquery-to-build-table-rows-from-ajax-responsejson
+            $("#games").append(
+                $("<tr>").append(
+                    $("<td>").text(data.response[i].teams.home.name),
+                    $("<td>").text(data.response[i].teams.away.name)
+                )
+            );
         }
     }
 });
