@@ -6,9 +6,13 @@ $(document).ready(function(){
         //get the value from the league
         var league = $("#league").val();
 
+        //get the timezone from the selected league's data-timezone attribute
+        var timezone = $("#league option:selected").attr("data-timezone");
+        
+
         //lookup the games for that day for that league from football-api 
         $.ajax({
-            url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=America/New_York&date=" + date + "&league=" + league + "&season=2023",
+            url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=" + timezone + "&date=" + date + "&league=" + league + "&season=2023",
             headers: {
                 "X-RapidAPI-Key": "3f23d2ecadmsh4f2bb7c7550b6f9p12596cjsnd21e81ce783d"
             },
