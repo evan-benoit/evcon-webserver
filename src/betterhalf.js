@@ -1,32 +1,6 @@
 //jquery code to change the table when the button is clicked
 $(document).ready(function(){
     $("#button").click(function(){
-        //get the value from the date picker
-        var date = $("#date-picker").val();
-        //get the value from the league
-        var league = $("#league").val();
-
-        //get the timezone from the selected league's data-timezone attribute
-        var timezone = $("#league option:selected").attr("data-timezone");
-        
-
-        //lookup the games for that day for that league from football-api 
-        $.ajax({
-            url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=" + timezone + "&date=" + date + "&league=" + league + "&season=2023",
-            headers: {
-                "X-RapidAPI-Key": "3f23d2ecadmsh4f2bb7c7550b6f9p12596cjsnd21e81ce783d"
-            },
-            method: "GET",
-            dataType: "json",
-            success: function(data){
-                //update the table with the new data
-                updateTable(data, league);
-            }   
-        })
-    });
-
-    //write the updateTable function to put that day's games in the table
-    function updateTable(data, league){
 
         //clear the table
         $("#games").empty();
@@ -40,6 +14,41 @@ $(document).ready(function(){
                 $("<td>")
             )
         );
+
+        //get the value from the date picker
+        var date = $("#date-picker").val();
+        //get the value from the league
+        var league = $("#league").val();
+
+        //get the timezone from the selected league's data-timezone attribute
+        var timezone = $("#league option:selected").attr("data-timezone");
+        
+        //get the current and prior year
+        var currentYear = new Date().getFullYear();
+        var priorYear = currentYear - 1;
+
+        //annoyingly, we need to specify the season to the API.  
+        //Sometimes the current season is the current year, sometimes it's the prior year (for leagues that span the new year)
+        //create an array of these two years and loop through it, calling the API twice
+        var years = [currentYear, priorYear];
+        years.forEach(year => {
+            $.ajax({
+                url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=" + timezone + "&date=" + date + "&league=" + league + "&season=" + year,
+                headers: {
+                    "X-RapidAPI-Key": "3f23d2ecadmsh4f2bb7c7550b6f9p12596cjsnd21e81ce783d"
+                },
+                method: "GET",
+                dataType: "json",
+                success: function(data){
+                    //update the table with the new data
+                    updateTable(data, league);
+                }   
+            });
+        });
+    });
+
+    //write the updateTable function to put that day's games in the table
+    function updateTable(data, league){
 
         //loop through the games
         for (var i = 0; i < data.response.length; i++){
