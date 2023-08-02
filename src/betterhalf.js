@@ -32,13 +32,16 @@ $(document).ready(function(){
             //using example from https://stackoverflow.com/questions/17724017/using-jquery-to-build-table-rows-from-ajax-responsejson
 
             //get the home and away score
-            var homeFinalScore = data.response[i].score.fulltime.home;
-            var awayFinalScore = data.response[i].score.fulltime.away;
-            var winningFinalScore;
-            var losingFinalScore;
-            var winningHalftimeScore;
-            var losingHalftimeScore;
-            var halfToWatch;
+            let fixtureID = data.response[i].fixture.id;
+            let homeName = data.response[i].teams.home.name;
+            let awayName = data.response[i].teams.away.name;
+            let homeFinalScore = data.response[i].score.fulltime.home;
+            let awayFinalScore = data.response[i].score.fulltime.away;
+            let winningFinalScore;
+            let losingFinalScore;
+            let winningHalftimeScore;
+            let losingHalftimeScore;
+            let halfToWatch;
 
             if (homeFinalScore === awayFinalScore) {
 
@@ -77,9 +80,18 @@ $(document).ready(function(){
 
             $("#games").append(
                 $("<tr>").append(
-                    $("<td>").text(data.response[i].teams.home.name),
-                    $("<td>").text(data.response[i].teams.away.name),
-                    $("<td>").text(halfToWatch)
+                    $("<td>").text(homeName).attr("id", "fixture-home-" + fixtureID),
+                    $("<td>").text(awayName).attr("id", "fixture-away-" + fixtureID),
+                    $("<td>").text(halfToWatch),
+
+                    //append a button labeled "reveal score"
+                    $("<td>").append(
+                        $("<button>").text("Reveal Score").click(function(){
+                            //when the button is clicked, reveal the score
+                            $("#fixture-home-" + fixtureID).text(homeName + ": " + homeFinalScore);
+                            $("#fixture-away-" + fixtureID).text(awayName + ": " + awayFinalScore);
+                        })
+                    )
                 )
             );
         }
