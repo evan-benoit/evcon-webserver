@@ -1,20 +1,21 @@
-<!--create an html page with a date picker-->
-<!--create a date picker and a dropdown and a button and a table-->
 <html>
 <head>
-    <title>My Better Half</title>
+    <title>TrophyPace: Better Half</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="betterhalf.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>My Better Half</h1>
+        <h1>Better Half</h1>
     </div>
     <div class="content">
         <div class="date-picker">
-            <input type="date" id="date-picker" name="date-picker" value="2023-07-15">
+            Date: <input type="text" name="date-picker" value="2023-07-15 - 2023-07-15" />
         </div>
         <div class="dropdown">
             <select id="league" name="league">

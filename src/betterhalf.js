@@ -1,5 +1,20 @@
 //jquery code to change the table when the button is clicked
 $(document).ready(function(){
+
+    var startDate;
+    var endDate;
+
+    $('input[name="date-picker"]').daterangepicker({
+        opens: 'left',
+        locale: {
+            format: 'YYYY/MM/DD'
+          }
+    }, function(start, end, label) {
+        startDate = start.format('YYYY-MM-DD');
+        endDate = end.format('YYYY-MM-DD');
+    });
+
+
     $("#button").click(function(){
 
         //clear the table
@@ -33,7 +48,7 @@ $(document).ready(function(){
         var years = [currentYear, priorYear];
         years.forEach(year => {
             $.ajax({
-                url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=" + timezone + "&date=" + date + "&league=" + league + "&season=" + year,
+                url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=" + timezone + "&from=" + startDate + "&to=" + endDate+ "&league=" + league + "&season=" + year,
                 headers: {
                     "X-RapidAPI-Key": "3f23d2ecadmsh4f2bb7c7550b6f9p12596cjsnd21e81ce783d"
                 },
