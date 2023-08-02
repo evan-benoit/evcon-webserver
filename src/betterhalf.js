@@ -41,10 +41,17 @@ $(document).ready(function(){
             var halfToWatch;
 
             if (homeFinalScore === awayFinalScore) {
-                if (homeFinalScore == 0) {
+
+                //if hate-draws is checked, skip the game
+                if ($("#hate-draws").is(":checked")) {
                     halfToWatch = "Skip Game";
                 } else {
-                    halfToWatch = "2nd Half";
+
+                    if (homeFinalScore == 0 && $("#hate-nil-draws").is(":checked")) {
+                        halfToWatch = "Skip Game";
+                    } else {
+                        halfToWatch = "2nd Half";
+                    }
                 }
             } else {
                 if (homeFinalScore > awayFinalScore) {
