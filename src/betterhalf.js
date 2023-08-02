@@ -57,6 +57,17 @@ $(document).ready(function(){
         }
     });
 
+    //when the value of league changes, write that to a cookie
+    $("#league").change(function(){
+        Cookies.set("league", $(this).val());
+    });
+
+    //read the value of league from a cookie
+    var league = Cookies.get("league");
+    if (league) {
+        $("#league").val(league);
+    }
+
 
     $("#button").click(function(){
 
