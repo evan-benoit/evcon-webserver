@@ -1,9 +1,14 @@
 //jquery code to change the table when the button is clicked
 $(document).ready(function(){
 
-    var startDate;
-    var endDate;
+    //get the current date
+    endDate = moment().format('YYYY-MM-DD');
 
+    //default start date to one week before endDate
+    startDate = moment(endDate).subtract(7, 'days').format('YYYY-MM-DD');
+
+    $('input[name="date-picker"]').val(startDate + " - " + endDate);
+    
     $('input[name="date-picker"]').daterangepicker({
         opens: 'left',
         locale: {
