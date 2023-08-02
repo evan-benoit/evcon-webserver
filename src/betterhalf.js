@@ -19,6 +19,44 @@ $(document).ready(function(){
         endDate = end.format('YYYY-MM-DD');
     });
 
+    //read the value of hate-draws from a cookie
+    var hateDraws = Cookies.get("hate-draws");
+    if (hateDraws == "true") {
+        $("#hate-draws").prop("checked", true);
+    } else {
+        $("#hate-draws").prop("checked", false);
+    }
+    //same as above but for hate-nil-draws
+    var hateNilDraws = Cookies.get("hate-nil-draws");
+    if (hateNilDraws == "true") {
+        $("#hate-nil-draws").prop("checked", true);
+    } else {
+        $("#hate-nil-draws").prop("checked", false);
+    }
+
+
+    //when the value of hate-nil-draws changes, write that to a cookie
+    $("#hate-nil-draws").change(function(){
+        if ($(this).is(":checked")) {
+            Cookies.set("hate-nil-draws", "true");
+        } else {
+            Cookies.set("hate-nil-draws", "false");
+        }
+    });
+    
+
+    //when the value of hate-draws changes, write that to a cookie
+    $("#hate-draws").change(function(){
+        if ($(this).is(":checked")) {
+            Cookies.set("hate-draws", "true");
+            //set hate-nil-draws to true as well
+            $("#hate-nil-draws").prop("checked", true);
+            Cookies.set("hate-nil-draws", "true");
+        } else {
+            Cookies.set("hate-draws", "false");
+        }
+    });
+
 
     $("#button").click(function(){
 
