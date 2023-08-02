@@ -26,6 +26,17 @@ $(document).ready(function(){
 
         //clear the table
         $("#games").empty();
+
+        //add the header row
+        $("#games").append(
+            $("<tr>").append(
+                $("<td>").text("Home"),
+                $("<td>").text("Away"),
+                $("<td>").text("Better Half"),
+                $("<td>")
+            )
+        );
+
         //loop through the games
         for (var i = 0; i < data.response.length; i++){
             //build the row
