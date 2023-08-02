@@ -23,6 +23,7 @@ $(document).ready(function(){
         //add the header row
         $("#games").append(
             $("<tr>").append(
+                $("<td>").text("Date"),
                 $("<td>").text("Home"),
                 $("<td>").text("Away"),
                 $("<td>").text("Better Half"),
@@ -119,6 +120,7 @@ $(document).ready(function(){
 
             $("#games").append(
                 $("<tr>").append(
+                    $("<td>").text(data.response[i].fixture.date.substring(0, 10)),
                     $("<td>").text(homeName).attr("id", "fixture-home-" + fixtureID),
                     $("<td>").text(awayName).attr("id", "fixture-away-" + fixtureID),
                     $("<td>").text(halfToWatch),
