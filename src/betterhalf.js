@@ -105,6 +105,9 @@ $(document).ready(function(){
                             //when the button is clicked, reveal the score
                             $("#fixture-home-" + fixtureID).text(homeName + ": " + homeFinalScore);
                             $("#fixture-away-" + fixtureID).text(awayName + ": " + awayFinalScore);
+
+                            //and remove the button
+                            $(this).remove();
                         })
                     )
                 )
