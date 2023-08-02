@@ -8,7 +8,7 @@ $(document).ready(function(){
 
         //lookup the games for that day for that league from football-api 
         $.ajax({
-            url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?date=" + date + "&league=" + league + "&season=2023",
+            url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=America/New_York&date=" + date + "&league=" + league + "&season=2023",
             headers: {
                 "X-RapidAPI-Key": "3f23d2ecadmsh4f2bb7c7550b6f9p12596cjsnd21e81ce783d"
             },
@@ -30,10 +30,49 @@ $(document).ready(function(){
         for (var i = 0; i < data.response.length; i++){
             //build the row
             //using example from https://stackoverflow.com/questions/17724017/using-jquery-to-build-table-rows-from-ajax-responsejson
+
+            //get the home and away score
+            var homeFinalScore = data.response[i].score.fulltime.home;
+            var awayFinalScore = data.response[i].score.fulltime.away;
+            var winningFinalScore;
+            var losingFinalScore;
+            var winningHalftimeScore;
+            var losingHalftimeScore;
+            var halfToWatch;
+
+            if (homeFinalScore === awayFinalScore) {
+                if (homeFinalScore == 0) {
+                    halfToWatch = "Skip Game";
+                } else {
+                    halfToWatch = "2nd Half";
+                }
+            } else {
+                if (homeFinalScore > awayFinalScore) {
+                    winningFinalScore = homeFinalScore;
+                    losingFinalScore = awayFinalScore;
+                    winningHalftimeScore = data.response[i].score.halftime.home;
+                    losingHalftimeScore = data.response[i].score.halftime.away;
+
+                } else {
+                    winningFinalScore = awayFinalScore;
+                    losingFinalScore = homeFinalScore;
+                    winningHalftimeScore = data.response[i].score.halftime.away;
+                    losingHalftimeScore = data.response[i].score.halftime.home;
+                }
+
+                //if the winning team was winning at halftime, watch the first half
+                if (winningHalftimeScore > losingHalftimeScore) {
+                    halfToWatch = "1st Half";
+                } else {
+                    halfToWatch = "2nd Half";
+                }
+            }
+
             $("#games").append(
                 $("<tr>").append(
                     $("<td>").text(data.response[i].teams.home.name),
-                    $("<td>").text(data.response[i].teams.away.name)
+                    $("<td>").text(data.response[i].teams.away.name),
+                    $("<td>").text(halfToWatch)
                 )
             );
         }
