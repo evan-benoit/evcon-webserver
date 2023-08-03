@@ -72,7 +72,7 @@ $(document).ready(function(){
     $("#button").click(function(){
 
         // if the end date is more than four months from the start date, tell the user to pick a shorter range
-        if (moment(endDate).diff(moment(startDate), 'days') > 28) {
+        if (moment(endDate).diff(moment(startDate), 'days') >= 28) {
             $("#games").empty();
 
             $("#games").append(
