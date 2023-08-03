@@ -184,6 +184,16 @@ $(document).ready(function(){
                     .append(
                         $("<button>").text("Reveal Score").addClass("rightButton").click(function(){
                             //when the button is clicked, reveal the score
+                            // if the home team wins, bold it
+                            if (homeFinalScore > awayFinalScore) {
+                                $("#fixture-home-" + fixtureID).css("font-weight", "bold");
+                            } else if (homeFinalScore < awayFinalScore) {
+                                $("#fixture-away-" + fixtureID).css("font-weight", "bold");
+                            } else {
+                                //if it's a draw, italicize both
+                                $("#fixture-home-" + fixtureID).css("font-style", "italic");
+                                $("#fixture-away-" + fixtureID).css("font-style", "italic");
+                            }
                             $("#fixture-home-" + fixtureID).text(homeName + ": " + homeFinalScore);
                             $("#fixture-away-" + fixtureID).text(awayName + ": " + awayFinalScore);
 
