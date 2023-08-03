@@ -11,6 +11,9 @@ button {
     float: right;
 }
 
+input[type="text"] {
+    width: 400px;
+}
 
 .title {
     border: none; 
