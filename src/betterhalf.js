@@ -105,8 +105,8 @@ $(document).ready(function(){
         //get the timezone from the selected league's data-timezone attribute
         var timezone = $("#league option:selected").attr("data-timezone");
         
-        //get the current and prior year
-        var currentYear = new Date().getFullYear();
+        //get the year from startDate
+        var currentYear = startDate.substring(0, 4);
         var priorYear = currentYear - 1;
 
         //annoyingly, we need to specify the season to the API.  
