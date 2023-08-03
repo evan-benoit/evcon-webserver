@@ -194,15 +194,5 @@ $(document).ready(function(){
                 )
             );
         }
-        // if the #games table only has one row
-        if ($("#games tr").length == 1) {
-            $("#games").empty();
-
-            $("#games").append(
-                $("<tr>").append(
-                    $("<td>").text("Sorry, there are no games in that league for those dates")
-                )
-            );
-        }
     }
 });
