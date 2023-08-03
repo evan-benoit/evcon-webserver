@@ -8,35 +8,37 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
-    <div class="header">
+    <div class="header" class="title">
         <h1>Better Half</h1>
     </div>
     <div class="content">
-        <div class="date-picker">
-            Date: <input type="text" name="date-picker" value="2023-07-15 - 2023-07-15" />
+        <div class="date-picker" >
+            <input type="text" name="date-picker" value="2023-07-15 - 2023-07-15" class="bigSelectBox" />
         </div>
         <div class="dropdown">
-            <select id="league" name="league">
+            <select id="league" name="league"  class="bigSelectBox">
                 <option value="0">Select</option>
                 <option value="253" data-timezone="America/New_York" selected="true">MLS</option>
                 <option value="254" data-timezone="America/New_York">NWSL</option>
             </select>
         </div>
 
-        <input type="checkbox" id="hate-nil-draws" name="hate-nil-draws" value="hate-nil-draws" checked="true">
+        <input type="checkbox" id="hate-nil-draws" name="hate-nil-draws" value="hate-nil-draws" checked="true" class="smallSelectBox">
         <label for="hate-nil-draws">I hate nill-nil draws!</label><br>
 
-        <input type="checkbox" id="hate-draws" name="hate-draws" value="hate-draws">
+        <input type="checkbox" id="hate-draws" name="hate-draws" value="hate-draws" class="smallSelectBox">
         <label for="hate-draws">I hate all draws!</label>
         
         <div class="button">
             <button id="button" name="button">Submit</button>
         </div>
         <div class="table">
-            <table id="games" name="games">
+            <table id="games" name="games" class="thinTable">
             </table>
         </div>
     </div>

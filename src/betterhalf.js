@@ -77,10 +77,10 @@ $(document).ready(function(){
         //add the header row
         $("#games").append(
             $("<tr>").append(
-                $("<td>").text("Date"),
-                $("<td>").text("Home"),
-                $("<td>").text("Away"),
-                $("<td>").text("Better Half"),
+                $("<th>").text("Date"),
+                $("<th>").text("Home"),
+                $("<th>").text("Away"),
+                $("<th>").text("Better Half"),
                 $("<td>")
             )
         );

@@ -28,3 +28,20 @@ button {
 .normalText {
     text-align: right;
 }
+
+/* create a table style with a thin border */
+.thinTable {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+/* add grid lines to this table */
+.thinTable td, .thinTable th {
+    border: 1px solid black;
+    padding: 5px;
+}
+/* make the table header bold */
+.thinTable th {
+    font-weight: bold;
+    background: #E8E8E8;
+}
+
