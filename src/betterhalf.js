@@ -100,6 +100,8 @@ $(document).ready(function(){
         //Sometimes the current season is the current year, sometimes it's the prior year (for leagues that span the new year)
         //create an array of these two years and loop through it, calling the API twice
         var years = [currentYear, priorYear];
+        var totalGames = 0;
+
         years.forEach(year => {
             $.ajax({
                 url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=" + timezone + "&from=" + startDate + "&to=" + endDate+ "&league=" + league + "&season=" + year,
@@ -114,10 +116,23 @@ $(document).ready(function(){
                 }   
             });
         });
+
+        if (totalGames == 0) {
+            // if the response has no content, print "sorry, there are no games for those dates"
+            $("#games").empty();
+
+            $("#games").append(
+                $("<tr>").append(
+                    $("<td>").text("Sorry, there are no games in that league for those dates")
+                )
+            );
+        }
     });
 
     //write the updateTable function to put that day's games in the table
     function updateTable(data, league){
+
+        totalGames += data.response.length;
 
         //loop through the games
         for (var i = 0; i < data.response.length; i++){
