@@ -71,6 +71,19 @@ $(document).ready(function(){
 
     $("#button").click(function(){
 
+        // if the end date is more than four months from the start date, tell the user to pick a shorter range
+        if (moment(endDate).diff(moment(startDate), 'days') > 28) {
+            $("#games").empty();
+
+            $("#games").append(
+                $("<tr>").append( 
+                    $("<td>").html("<i>Please select a date range shorter than 4 weeks, or I get tired from so much running around!</i>")
+                )
+            );
+
+            return;
+        }
+
         //clear the table
         $("#games").empty();
 
