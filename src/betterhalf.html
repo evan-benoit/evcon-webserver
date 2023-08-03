@@ -13,13 +13,13 @@
 </head>
 <body>
     <div style="display: table">
-        <div style="display: table-row">
-          <div style="display: table-cell">
+        <div style="display: table-row; padding: 15px;">
+          <div style="display: table-cell; padding: 15px;">
             <div class="title">Better/Half<img src="/images/favicon.ico" width=60 height="60" style="vertical-align: text-bottom;"></div>
           </div>
         </div>
-        <div style="display: table-row">
-            <div style="display: table-cell; width:max-content;"">
+        <div style="display: table-row;">
+            <div style="display: table-cell; width:max-content;; padding: 10px;"">
                 <input type="text" name="date-picker" value="2023-07-15 - 2023-07-15" class="date-picker; bigSelectBox" />
                 <select id="league" name="league"  class="bigSelectBox">
                     <option value="0">Select</option>
@@ -29,14 +29,17 @@
             </div>
         </div>
         <div style="display: table-row">
-            <div style="display: table-cell">
+            <div style="display: table-cell; padding: 10px;">
 
                 <input type="checkbox" id="hate-nil-draws" name="hate-nil-draws" value="hate-nil-draws" checked="true" class="smallSelectBox">
                 <label for="hate-nil-draws">I hate nill-nil draws!</label>
 
                 <input type="checkbox" id="hate-draws" name="hate-draws" value="hate-draws" class="smallSelectBox">
                 <label for="hate-draws">I hate all draws!</label>
-                
+            </div>
+        </div>
+        <div style="display: table-row">
+            <div style="display: table-cell; padding: 10px;">                
                 <div class="button">
                     <button id="button" name="button">Submit</button>
                 </div>
