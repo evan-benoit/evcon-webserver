@@ -80,8 +80,7 @@ $(document).ready(function(){
                 $("<th>").text("Date"),
                 $("<th>").text("Home"),
                 $("<th>").text("Away"),
-                $("<th>").text("Better Half"),
-                $("<td>")
+                $("<th>").text("Better Half")
             )
         );
 
@@ -177,11 +176,11 @@ $(document).ready(function(){
                     $("<td>").text(data.response[i].fixture.date.substring(0, 10)),
                     $("<td>").text(homeName).attr("id", "fixture-home-" + fixtureID),
                     $("<td>").text(awayName).attr("id", "fixture-away-" + fixtureID),
-                    $("<td>").text(halfToWatch),
+                    $("<td>").html(halfToWatch + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
 
                     //append a button labeled "reveal score"
-                    $("<td>").append(
-                        $("<button>").text("Reveal Score").click(function(){
+                    .append(
+                        $("<button>").text("Reveal Score").addClass("rightButton").click(function(){
                             //when the button is clicked, reveal the score
                             $("#fixture-home-" + fixtureID).text(homeName + ": " + homeFinalScore);
                             $("#fixture-away-" + fixtureID).text(awayName + ": " + awayFinalScore);
