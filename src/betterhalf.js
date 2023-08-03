@@ -116,23 +116,10 @@ $(document).ready(function(){
                 }   
             });
         });
-
-        if (totalGames == 0) {
-            // if the response has no content, print "sorry, there are no games for those dates"
-            $("#games").empty();
-
-            $("#games").append(
-                $("<tr>").append(
-                    $("<td>").text("Sorry, there are no games in that league for those dates")
-                )
-            );
-        }
     });
 
     //write the updateTable function to put that day's games in the table
     function updateTable(data, league){
-
-        totalGames += data.response.length;
 
         //loop through the games
         for (var i = 0; i < data.response.length; i++){
@@ -204,6 +191,16 @@ $(document).ready(function(){
                             $(this).remove();
                         })
                     )
+                )
+            );
+        }
+        // if the #games table only has one row
+        if ($("#games tr").length == 1) {
+            $("#games").empty();
+
+            $("#games").append(
+                $("<tr>").append(
+                    $("<td>").text("Sorry, there are no games in that league for those dates")
                 )
             );
         }
