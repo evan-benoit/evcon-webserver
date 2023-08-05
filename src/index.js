@@ -112,10 +112,21 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
                 return null;
               }
 
-              if (raw.teamName == raw.homeTeam) {
-                return raw.homeTeam.toUpperCase() + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore 
+              // if we're in bumpchart or byMatch mode, show the date
+              let matchInfo = "";
+              if (chartMode == "bumpChart" || chartMode == "byMatch") {
+                matchInfo = new Date(raw.timestamp).toISOString().slice(0,10);
               } else {
-                return raw.homeTeam + " " + raw.homeScore + " - " + raw.awayTeam.toUpperCase() + " " + raw.awayScore
+                matchInfo = "Match " + raw.matchNumber;
+              }
+
+              //translate the timestamp into a date with YYYY-MM-DD format
+              const gameDate = new Date(raw.timestamp).toISOString().slice(0,10);
+
+              if (raw.teamName == raw.homeTeam) {
+                return raw.homeTeam.toUpperCase() + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore + " (" + matchInfo + ")"
+              } else {
+                return raw.homeTeam + " " + raw.homeScore + " - " + raw.awayTeam.toUpperCase() + " " + raw.awayScore + " (" + matchInfo + ")"
               }
             },
           }
