@@ -151,6 +151,15 @@ $(document).ready(function(){
             let losingHalftimeScore;
             let halfToWatch;
 
+            //Remove the trailing "W" from the home team's name if it's there
+            if (homeName.substring(homeName.length - 1) == "W") {
+                homeName = homeName.substring(0, homeName.length - 1);
+            }
+            //Remove the trailing "W" from the away team's name if it's there
+            if (awayName.substring(awayName.length - 1) == "W") {
+                awayName = awayName.substring(0, awayName.length - 1);
+            }
+
             //if the game hasn't been played yet, skip it
             if (homeFinalScore === null) {
                 continue;
