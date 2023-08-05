@@ -99,7 +99,7 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
                   if (fixture.matchNumber == "0") { //no tooltip for origin point
                     return null;
                   } else {
-                    return fixture.teamName + ": " + fixture.cumPoints + " points (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
+                    return fixture.rank + ") " + fixture.teamName + ": " + fixture.cumPoints + " points (GD: " + fixture.cumDifferential + " Goals: " + fixture.cumGoals + ")";
                   }
                 }
             },
