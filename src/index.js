@@ -116,6 +116,8 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
               let matchInfo = "";
               if (chartMode == "bumpChart" || chartMode == "byMatch") {
                 matchInfo = new Date(raw.timestamp).toISOString().slice(0,10);
+             
+              //else, show the matchNumber
               } else {
                 matchInfo = "Match " + raw.matchNumber;
               }
