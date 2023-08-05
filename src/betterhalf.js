@@ -151,6 +151,11 @@ $(document).ready(function(){
             let losingHalftimeScore;
             let halfToWatch;
 
+            //if the game hasn't been played yet, skip it
+            if (homeFinalScore === null) {
+                continue;
+            }   
+
             if (homeFinalScore === awayFinalScore) {
 
                 //if hate-draws is checked, skip the game
