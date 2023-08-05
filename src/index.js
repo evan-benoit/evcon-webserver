@@ -113,9 +113,9 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
               }
 
               if (raw.teamName == raw.homeTeam) {
-                return raw.homeTeam.toUpperCase() + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore + " (" + raw.round + ")";
+                return raw.homeTeam.toUpperCase() + " " + raw.homeScore + " - " + raw.awayTeam + " " + raw.awayScore 
               } else {
-                return raw.homeTeam + " " + raw.homeScore + " - " + raw.awayTeam.toUpperCase() + " " + raw.awayScore + " (" + raw.round + ")";
+                return raw.homeTeam + " " + raw.homeScore + " - " + raw.awayTeam.toUpperCase() + " " + raw.awayScore
               }
             },
           }
