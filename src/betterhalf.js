@@ -104,6 +104,8 @@ $(document).ready(function(){
 
         //get the timezone from the selected league's data-timezone attribute
         var timezone = $("#league option:selected").attr("data-timezone");
+        var countryCode = $("#league option:selected").attr("data-countryCode");
+
         
         //get the year from startDate
         var currentYear = startDate.substring(0, 4);
@@ -117,11 +119,8 @@ $(document).ready(function(){
 
         years.forEach(year => {
             $.ajax({
-                url: "https://api-football-v1.p.rapidapi.com/v3/fixtures?timezone=" + timezone + "&from=" + startDate + "&to=" + endDate+ "&league=" + league + "&season=" + year,
-                headers: {
-                    "X-RapidAPI-Key": "3f23d2ecadmsh4f2bb7c7550b6f9p12596cjsnd21e81ce783d"
-                },
-                method: "GET",
+                url: "https://us-east1-evcon-app.cloudfunctions.net/betterHalf?countryCode=" + countryCode + "&leagueID=" + league + "&seasonID=" + year  + "&startDate=" + startDate + "&endDate=" + endDate + "&timezone=" + timezone,
+                method: "POST",
                 dataType: "json",
                 success: function(data){
                     //update the table with the new data
@@ -135,16 +134,15 @@ $(document).ready(function(){
     function updateTable(data, league){
 
         //loop through the games
-        for (var i = 0; i < data.response.length; i++){
-            //build the row
-            //using example from https://stackoverflow.com/questions/17724017/using-jquery-to-build-table-rows-from-ajax-responsejson
-
+        for (var i = 0; i < data.length; i++){
+ 
             //get the home and away score
-            let fixtureID = data.response[i].fixture.id;
-            let homeName = data.response[i].teams.home.name;
-            let awayName = data.response[i].teams.away.name;
-            let homeFinalScore = data.response[i].score.fulltime.home;
-            let awayFinalScore = data.response[i].score.fulltime.away;
+            let fixtureID = data[i].fixtureID;
+            let homeName = data[i].homeTeam;
+            let awayName = data[i].awayTeam;
+            let homeFinalScore = data[i].homeFinalScore;
+            let awayFinalScore = data[i].awayFinalScore;
+            let date = data[i].date;
             let winningFinalScore;
             let losingFinalScore;
             let winningHalftimeScore;
@@ -182,14 +180,14 @@ $(document).ready(function(){
                 if (homeFinalScore > awayFinalScore) {
                     winningFinalScore = homeFinalScore;
                     losingFinalScore = awayFinalScore;
-                    winningHalftimeScore = data.response[i].score.halftime.home;
-                    losingHalftimeScore = data.response[i].score.halftime.away;
+                    winningHalftimeScore = data[i].homeHalftimeScore;
+                    losingHalftimeScore = data[i].awayHalftimeScore;
 
                 } else {
                     winningFinalScore = awayFinalScore;
                     losingFinalScore = homeFinalScore;
-                    winningHalftimeScore = data.response[i].score.halftime.away;
-                    losingHalftimeScore = data.response[i].score.halftime.home;
+                    winningHalftimeScore = data[i].awayHalftimeScore;
+                    losingHalftimeScore = data[i].homeHalftimeScore;
                 }
 
                 //if the winning team was winning at halftime, watch the first half
@@ -202,7 +200,7 @@ $(document).ready(function(){
 
             $("#games").append(
                 $("<tr>").append(
-                    $("<td>").text(data.response[i].fixture.date.substring(0, 10)),
+                    $("<td>").text(date),
                     $("<td>").text(homeName).attr("id", "fixture-home-" + fixtureID),
                     $("<td>").text(awayName).attr("id", "fixture-away-" + fixtureID),
                     $("<td>").html(halfToWatch + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
