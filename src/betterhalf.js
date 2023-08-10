@@ -87,16 +87,6 @@ $(document).ready(function(){
         //clear the table
         $("#games").empty();
 
-        //add the header row
-        $("#games").append(
-            $("<tr>").append(
-                $("<th>").text("Date"),
-                $("<th>").text("Home"),
-                $("<th>").text("Away"),
-                $("<th>").text("Better Half")
-            )
-        );
-
         //get the value from the date picker
         var date = $("#date-picker").val();
         //get the value from the league
@@ -106,32 +96,65 @@ $(document).ready(function(){
         var timezone = $("#league option:selected").attr("data-timezone");
         var countryCode = $("#league option:selected").attr("data-countryCode");
 
-        
-        //get the year from startDate
-        var currentYear = startDate.substring(0, 4);
-        var priorYear = currentYear - 1;
+        $.ajax({
+            url: "https://us-east1-evcon-app.cloudfunctions.net/betterHalf?countryCode=" + countryCode + "&leagueID=" + league + "&startDate=" + startDate + "&endDate=" + endDate + "&timezone=" + timezone,
+            method: "POST",
+            dataType: "json",
+            success: function(data){
+                //update the table with the new data
+                updateTable(data, league);
+            },   
+            //if there's an error, print that an error occurred
+            error: function(){
+                $("#games").empty();
 
-        //annoyingly, we need to specify the season to the API.  
-        //Sometimes the current season is the current year, sometimes it's the prior year (for leagues that span the new year)
-        //create an array of these two years and loop through it, calling the API twice
-        var years = [currentYear, priorYear];
-        var totalGames = 0;
+                $("#games").append(
+                    $("<tr>").append( 
+                        $("<td>").html("<i>Sorry, an error occurred. Please try again later.</i>")
+                    )
+                );
+            },
+            //add a loading message
+            beforeSend: function(){
+                $("#games").empty();
 
-        years.forEach(year => {
-            $.ajax({
-                url: "https://us-east1-evcon-app.cloudfunctions.net/betterHalf?countryCode=" + countryCode + "&leagueID=" + league + "&seasonID=" + year  + "&startDate=" + startDate + "&endDate=" + endDate + "&timezone=" + timezone,
-                method: "POST",
-                dataType: "json",
-                success: function(data){
-                    //update the table with the new data
-                    updateTable(data, league);
-                }   
-            });
+                $("#games").append(
+                    $("<tr>").append( 
+                        $("<td>").html("<i>Loading...</i>")
+                    )
+                );
+            }
         });
     });
 
     //write the updateTable function to put that day's games in the table
     function updateTable(data, league){
+
+    
+        // if there are no games, tell the user to pick a different date range
+        if (data.length == 0) {
+            $("#games").empty();
+
+            $("#games").append(
+                $("<tr>").append( 
+                    $("<td>").html("<i>Sorry, there are no games in that league for that date range!</i>")
+                )
+            );
+
+            return;
+        }
+
+        $("#games").empty();
+
+        //add the header row
+        $("#games").append(
+            $("<tr>").append(
+                $("<th>").text("Date"),
+                $("<th>").text("Home"),
+                $("<th>").text("Away"),
+                $("<th>").text("Better Half")
+            )
+        );
 
         //loop through the games
         for (var i = 0; i < data.length; i++){
