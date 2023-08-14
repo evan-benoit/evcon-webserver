@@ -58,6 +58,9 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
           title: {
             text: 'Points',
             display: true,
+          },
+          ticks: {
+            stepSize: 1 
           }
         },
         x: {
@@ -66,6 +69,9 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
           title: {
             text: 'Date',
             display: true,
+          },
+          ticks: {
+            stepSize: 1
           }
         }
       },
