@@ -280,7 +280,20 @@ function drawSeasons() {
   var league = $("#league").find(":selected").val();
 
   for (const i in index[country].leagues[league].seasons.sort().reverse()) {
-    $('#season').append('<option value="' + index[country].leagues[league].seasons[i] + '">' + index[country].leagues[league].seasons[i] + '</option>');
+    var season = index[country].leagues[league].seasons[i];
+    var seasonDisplay
+
+    // if the country is not "us", then display the season as spanning two years
+    // (yeah this is kind of a hack, but it works for now, and I won't have to change the data model)
+    if (country != "us") {
+      // nextYear is the year after the season
+      var nextYear = parseInt(season) + 1;
+      seasonDisplay = season + "-" + nextYear;
+    } else {
+      seasonDisplay = season;
+    }
+
+    $('#season').append('<option value="' + season + '">' + seasonDisplay + '</option>');
   }
 
 
