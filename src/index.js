@@ -212,9 +212,10 @@ async function redrawChart() {
   teamSeasonChart.update();
 }
 
-async function drawCountries() {
-  index = await getIndex();
-  console.log(index);
+function drawCountries(data) {
+  console.log(data);
+
+  let index = data;
 
   for (const country of Object.keys(index).sort()) {
     $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
@@ -226,19 +227,19 @@ async function drawCountries() {
     $('#country').val("uk");
   }
   
-  drawLeagues();
+  drawLeagues(index);
 
   $("#chartMode").change(async function() {
     redrawChart();
   });
   
   $("#country").change(async function() {
-    drawLeagues();
+    drawLeagues(index);
     redrawChart();
   });
   
   $("#league").change(async function() {
-    drawSeasons();
+    drawSeasons(index);
     redrawChart();
   });
 
@@ -261,7 +262,7 @@ async function drawCountries() {
   redrawChart();
 }
 
-function drawLeagues() {
+function drawLeagues(index) {
   $('#league').find('option').remove();
 
   var country = $("#country").find(":selected").val();
@@ -269,11 +270,11 @@ function drawLeagues() {
   for (const league in index[country].leagues) {
     $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
   }
-  drawSeasons();
+  drawSeasons(index);
 }
 
 
-function drawSeasons() {
+function drawSeasons(index) {
   $('#season').find('option').remove();
 
   var country = $("#country").find(":selected").val();
@@ -302,7 +303,6 @@ function drawSeasons() {
 
 
 
-var index;
 var teamSeasonChart;
 var lastFullMatchNumber;
 var maxCumPoints;
@@ -371,9 +371,23 @@ $( document ).ready(function() {
 
 
 
+  // Make the ajax call to load the country dropdown
+  $.ajax({
+    url: "https://us-east1-evcon-app.cloudfunctions.net/getIndex",
+    method: "POST",
+    dataType: "json",
+    success: function(data){
+        drawCountries(data); 
+    },   
+    //if there's an error, print that an error occurred in the countries dropdown
+    error: function(){
+        $("#country").empty();
 
-  drawCountries();
-
+        $("#country").append(
+            $("<option>").html("<i>Sorry, an error occurred. Please try again later.</i>")
+        );
+    }
+  });
 
 
 });

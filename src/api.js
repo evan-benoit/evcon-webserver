@@ -33,17 +33,3 @@ export async function getSeason(countryCode, leagueID, season){
     
 }
 
-
-export async function getIndex(){
-    const docRef = doc(db, "index", "latest");
-    const docSnap = await getDoc(docRef);
-    
-    if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-    } else {
-        console.log("No such document!");
-    }
-    
-    return docSnap.data();
-    
-}
