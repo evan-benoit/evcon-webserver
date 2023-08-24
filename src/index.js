@@ -1,8 +1,13 @@
-import { getIndex, getSeason } from './api'
 
 
 async function drawChart(countryCode, leagueID, season, chartMode) {
-  let data = await getSeason(countryCode, leagueID, season); 
+  // make an ajax call to getSeason
+  let data = await $.ajax({
+    url: "https://us-east1-evcon-app.cloudfunctions.net/getSeason?countryCode=" + countryCode + "&leagueID=" + leagueID + "&season=" + season,
+    method: "POST",
+    dataType: "json"
+  });
+  
   let datasets = data.datasets;
   lastFullMatchNumber = data.lastFullMatchNumber;
   maxCumPoints = data.maxCumPoints;
