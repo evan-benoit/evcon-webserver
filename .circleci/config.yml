@@ -36,6 +36,7 @@ jobs:
           attach-workspace: true
           image: webserver
           no_output_timeout: 20m
+          registry-url: us-east1-docker.pkg.dev
       # - gcp-gcr/push-image:
           # digest-path: /tmp/digest.txt
           # image: orb-test
