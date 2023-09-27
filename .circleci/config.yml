@@ -8,8 +8,9 @@ jobs:
   say-hello:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
+    # give me an npm base image
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:12.18.3
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
@@ -22,13 +23,13 @@ jobs:
           name: "Run npm build"
           command: "npm run build"
       # run docker build for the linux/amd64 platform
-      - run:
-          name: "Run docker build"
-          command: "docker build -t webserver --platform linux/amd64 ."
+      # - run:
+          # name: "Run docker build"
+          # command: "docker build -t webserver --platform linux/amd64 ."
       # tag the docker build 
-      - run:
-          name: "Tag docker build"
-          command: "docker tag webserver us-east1-docker.pkg.dev/evcon-app/my-repository/webserver"
+      # - run:
+          # name: "Tag docker build"
+          # command: "docker tag webserver us-east1-docker.pkg.dev/evcon-app/my-repository/webserver"
 
 
 
