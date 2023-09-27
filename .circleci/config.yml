@@ -44,7 +44,7 @@ jobs:
   rollout:
     executor: gcp-gke/default
     steps:
-      - gcp-gke/publish-and-rollout-image:
+      - gcp-gke/rollout-image:
           cluster: evcon-app-gke
           container: webserver-container
           deployment: webserver
