@@ -47,7 +47,7 @@ jobs:
     steps:
       - gcp-cli/install:
           components: kubectl 
-      - update-kubeconfig-with-credentials:
+      - gcp-gke/update-kubeconfig-with-credentials:
           cluster: evcon-app-gke
       - gcp-gke/rollout-image:
           container: webserver-container
