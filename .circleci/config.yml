@@ -37,10 +37,9 @@ jobs:
           image: webserver
           no_output_timeout: 20m
           registry-url: us-east1-docker.pkg.dev
-      # - gcp-gcr/push-image:
-          # digest-path: /tmp/digest.txt
-          # image: orb-test
-          # registry-url: eu.gcr.io
+      - gcp-gcr/push-image:
+          image: webserver
+          registry-url: us-east1-docker.pkg.dev
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
