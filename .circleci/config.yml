@@ -27,6 +27,7 @@ jobs:
             - Dockerfile
             - dist
   deploy:
+    #see https://circleci.com/developer/orbs/orb/circleci/gcp-gcr
     executor: gcp-gcr/default
     steps:
       # - checkout
@@ -38,7 +39,7 @@ jobs:
           no_output_timeout: 20m
           registry-url: us-east1-docker.pkg.dev
       - gcp-gcr/push-image:
-          image: webserver
+          image: my-repository/webserver
           registry-url: us-east1-docker.pkg.dev
 
 # Orchestrate jobs using workflows
