@@ -22,6 +22,10 @@ jobs:
       - run:
           name: "Run npm install"
           command: "npm install clean"
+      # install parcel
+      - run:
+          name: "Install parcel"
+          command: "npm install --save-dev parcel"
       # run npm build
       - run:
           name: "Run npm build"
