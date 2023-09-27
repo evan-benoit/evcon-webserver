@@ -22,7 +22,8 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - .
+            - Dockerfile
+            - dist
   deploy:
     executor: node/default
     steps:
