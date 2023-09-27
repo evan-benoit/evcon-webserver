@@ -30,7 +30,7 @@ jobs:
     executor: gcp-gcr/default
     steps:
       # - checkout
-      - gcp-gcr/gcr-auth
+      - gcp-gcr/gcr-auth:
           registry-url: us-east1-docker.pkg.dev
       - gcp-gcr/build-image:
           attach-workspace: true
