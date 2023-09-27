@@ -3,6 +3,8 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.2
+  gcp-gcr: circleci/gcp-gcr@x.y.z
+
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
@@ -25,11 +27,18 @@ jobs:
             - Dockerfile
             - dist
   deploy:
-    executor: node/default
+    executor: gcp-gcr/default
     steps:
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+      # - checkout
+      # - gcp-gcr/gcr-auth
+      - gcp-gcr/build-image:
+          image: webserver
+          no_output_timeout: 20m
+          registry-url: us-east1-docker.pkg.dev
+      # - gcp-gcr/push-image:
+          # digest-path: /tmp/digest.txt
+          # image: orb-test
+          # registry-url: eu.gcr.io
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
