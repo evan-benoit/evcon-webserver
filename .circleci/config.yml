@@ -41,31 +41,35 @@ jobs:
           registry-url: us-east1-docker.pkg.dev
       - gcp-gcr/push-image:
           image: my-repository/webserver
-          registry-url: us-east1-docker.pkg.dev   
-  
+          registry-url: us-east1-docker.pkg.dev
+  rollout:
+    executor: gcp-gke/default
+    steps:
+      - gcp-cli/install:
+          components: kubectl 
+      - update-kubeconfig-with-credentials:
+          cluster: evcon-app-gke
+      - gcp-gke/rollout-image:
+          container: webserver-container
+          deployment: webserver
+          image: us-east1-docker.pkg.dev/evcon-app/my-repository/webserver
+          tag: latest
+
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   build-webserver-workflow:
     jobs:
       - build_and_test
-      # - deploy:
-          # requires:
-            # - build_and_test # only deploy if the build_and_test job has completed
-          # filters:
-            # branches:
-              # only: main # only deploy when on main
-      # https://circleci.com/developer/orbs/orb/circleci/gcp-gke#jobs-publish-and-rollout-image
-      - gcp-gke/publish-and-rollout-image:
+      - deploy:
           requires:
-            - build_and_test
+            - build_and_test # only deploy if the build_and_test job has completed
           filters:
             branches:
-              only: main
-          attach-workspace: true
-          cluster: evcon-app-gke
-          container: webserver-container
-          deployment: webserver
-          image: my-repository/webserver
-          tag: latest
-          registry_url: us-east1-docker.pkg.dev
+              only: main # only deploy when on main
+      - rollout:
+          requires:
+            - deploy # only rollout if the deploy job has completed
+          filters:
+            branches:
+              only: main # only rollout when on main
