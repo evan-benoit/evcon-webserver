@@ -45,7 +45,6 @@ jobs:
     executor: gcp-gke/default
     steps:
       - gcp-gke/rollout-image:
-          cluster: evcon-app-gke
           container: webserver-container
           deployment: webserver
           image: us-east1-docker.pkg.dev/evcon-app/my-repository/webserver
