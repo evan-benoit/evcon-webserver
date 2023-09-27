@@ -10,7 +10,7 @@ jobs:
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     # give me an npm base image
     docker:
-      - image: circleci/node:9.4.0
+      - image: cimg/node:9.4.0
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
