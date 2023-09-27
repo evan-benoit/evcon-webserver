@@ -33,6 +33,13 @@ $(document).ready(function(){
     } else {
         $("#hate-nil-draws").prop("checked", false);
     }
+    //same as above, but for who-won
+    var whoWon = Cookies.get("who-won");
+    if (whoWon == "true") {
+        $("#who-won").prop("checked", true);
+    } else {
+        $("#who-won").prop("checked", false);
+    }
 
 
     //when the value of hate-nil-draws changes, write that to a cookie
@@ -54,6 +61,15 @@ $(document).ready(function(){
             Cookies.set("hate-nil-draws", "true");
         } else {
             Cookies.set("hate-draws", "false");
+        }
+    });
+
+    //when the value of who-won changes, write that to a cookie
+    $("#who-won").change(function(){
+        if ($(this).is(":checked")) {
+            Cookies.set("who-won", "true");
+        } else {
+            Cookies.set("who-won", "false");
         }
     });
 
@@ -251,6 +267,17 @@ $(document).ready(function(){
                     )
                 )
             );
+            //if who-won is checked, automatically bold the winner
+            if ($("#who-won").is(":checked")) {
+                if (homeFinalScore > awayFinalScore) {
+                    $("#fixture-home-" + fixtureID).css("font-weight", "bold");
+                } else if (homeFinalScore < awayFinalScore) {
+                    $("#fixture-away-" + fixtureID).css("font-weight", "bold");
+                } else {
+                    $("#fixture-home-" + fixtureID).css("font-style", "italic");
+                    $("#fixture-away-" + fixtureID).css("font-style", "italic");
+                }
+            }
         }
     }
 });
