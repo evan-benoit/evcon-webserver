@@ -35,7 +35,7 @@ jobs:
           registry-url: us-east1-docker.pkg.dev
       - gcp-gcr/build-image:
           attach-workspace: true
-          image: webserver
+          image: my-repository/webserver
           no_output_timeout: 20m
           registry-url: us-east1-docker.pkg.dev
       - gcp-gcr/push-image:
