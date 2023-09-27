@@ -24,6 +24,8 @@ jobs:
           paths:
             - .
   deploy:
+    executor: node/default
+    steps:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
