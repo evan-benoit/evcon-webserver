@@ -43,7 +43,7 @@ jobs:
           image: my-repository/webserver
           registry-url: us-east1-docker.pkg.dev   
   
-
+ead
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
@@ -57,6 +57,11 @@ workflows:
             # branches:
               # only: main # only deploy when on main
       - gcp-gke/publish-and-rollout-image:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: main
           cluster: evcon-app-gke
           container: webserver-container
           deployment: webserver
