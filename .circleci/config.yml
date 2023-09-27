@@ -25,7 +25,7 @@ jobs:
       # install parcel
       - run:
           name: "Install parcel"
-          command: "npm install --save-dev parcel"
+          command: "npm install -g parcel-bundler"
       # run npm build
       - run:
           name: "Run npm build"
