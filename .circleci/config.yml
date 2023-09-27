@@ -17,6 +17,20 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+      # run npm build
+      - run:
+          name: "Run npm build"
+          command: "npm run build"
+      # run docker build for the linux/amd64 platform
+      - run:
+          name: "Run docker build"
+          command: "docker build -t webserver --platform linux/amd64 ."
+      # tag the docker build 
+      - run:
+          name: "Tag docker build"
+          command: "docker tag webserver us-east1-docker.pkg.dev/evcon-app/my-repository/webserver"
+
+
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
