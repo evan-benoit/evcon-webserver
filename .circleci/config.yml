@@ -43,7 +43,6 @@ jobs:
           image: my-repository/webserver
           registry-url: us-east1-docker.pkg.dev   
   
-ead
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
