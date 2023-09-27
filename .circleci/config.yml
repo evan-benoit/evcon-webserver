@@ -4,7 +4,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
   gcp-gcr: circleci/gcp-gcr@0.15.3
-  gcp-gke: circleci/gcp-gke@2.2.0
+  gke: circleci/gcp-gke@3.0
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
@@ -44,19 +44,12 @@ jobs:
   rollout:
     executor: gcp-gke/default
     steps:
-      - gcp-gke/install:
-          project-id: evcon-app
-          zone: us-east1-a
-          cluster-name: evcon-app-gke
-      - gcp-gke/use-context:
-          project-id: evcon-app
-          zone: us-east1-a
-          cluster-name: evcon-app-gke
-      - gcp-gke/kubectl-run:
-          command: kubectl rollout restart deployment webserver
-          project-id: evcon-app
-          zone: us-east1-a
-          cluster-name: evcon-app-gke
+      - gke/publish-and-rollout-image:
+          cluster: evcon-app-gke
+          container: webserver-container
+          deployment: webserver
+          image: us-east1-docker.pkg.dev/evcon-app/my-repository/webserver
+          tag: latest
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
