@@ -21,7 +21,7 @@ jobs:
       # run npm install
       - run:
           name: "Run npm install"
-          command: "npm install"
+          command: "npm ci"
       # run npm build
       - run:
           name: "Run npm build"
