@@ -17,9 +17,8 @@ jobs:
     steps:
       - checkout
       # run npm install
-      - run:
-          name: "Run npm install"
-          command: "npm install clean"
+      - node/install-packages:
+          pkg-manager: npm
       # install parcel
       - run:
           name: "Install parcel"
