@@ -23,6 +23,10 @@ jobs:
           root: ~/project
           paths:
             - .
+  deploy:
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
@@ -30,3 +34,9 @@ workflows:
   build-webserver-workflow:
     jobs:
       - build_and_test
+      - deploy:
+          requires:
+            - build_and_test # only deploy if the build_and_test job has completed
+          filters:
+            branches:
+              only: main # only deploy when on main      
