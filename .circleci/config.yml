@@ -3,7 +3,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.2
-  gcp-gcr: circleci/gcp-gcr@x.y.z
+  gcp-gcr: circleci/gcp-gcr@0.15.3
 
 
 # Define a job to be invoked later in a workflow.
