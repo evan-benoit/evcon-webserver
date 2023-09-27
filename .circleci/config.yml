@@ -55,12 +55,14 @@ workflows:
           # filters:
             # branches:
               # only: main # only deploy when on main
+      # https://circleci.com/developer/orbs/orb/circleci/gcp-gke#jobs-publish-and-rollout-image
       - gcp-gke/publish-and-rollout-image:
           requires:
             - build_and_test
           filters:
             branches:
               only: main
+          attach-workspace: true
           cluster: evcon-app-gke
           container: webserver-container
           deployment: webserver
