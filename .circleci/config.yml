@@ -52,11 +52,10 @@ jobs:
       - gcp-gke/update-kubeconfig-with-credentials:
           cluster: evcon-app-gke
           additional_args:  --region us-east1 --project evcon-app
-      - gcp-gke/rollout-image:
-          container: webserver-container
-          deployment: webserver
-          image: us-east1-docker.pkg.dev/evcon-app/my-repository/webserver
-          tag: latest
+      - run:
+          name: "Rollout Restart"
+          command: "kubectl rollout restart deployment webserver"
+
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
