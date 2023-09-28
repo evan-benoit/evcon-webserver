@@ -181,6 +181,7 @@ $(document).ready(function(){
             let awayName = data[i].awayTeam;
             let homeFinalScore = data[i].homeFinalScore;
             let awayFinalScore = data[i].awayFinalScore;
+            let nearComeback = data[i].nearComeback;
             let date = data[i].date;
             let winningFinalScore;
             let losingFinalScore;
@@ -215,6 +216,10 @@ $(document).ready(function(){
                         halfToWatch = "2nd Half";
                     }
                 }
+            } else if (nearComeback) {
+                //if the losing team almost came back, watch the second half
+                halfToWatch = "2nd Half";
+                
             } else {
                 if (homeFinalScore > awayFinalScore) {
                     winningFinalScore = homeFinalScore;
