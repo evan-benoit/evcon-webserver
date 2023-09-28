@@ -11,3 +11,4 @@ tf/gke/terraform.tfstate.backup
 tf/gke/.terraform.tfstate.lock.info
 tf/gke/.terraform/terraform.tfstate
 node_modules/*
+.DS_Store
