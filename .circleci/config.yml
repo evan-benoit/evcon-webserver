@@ -46,8 +46,6 @@ jobs:
     executor: gcp-gke/default
     steps:
       # https://circleci.com/developer/orbs/orb/circleci/gcp-cli
-      - gcp-cli/install:
-          components: kubectl 
       - gcp-cli/setup:
           components: kubectl             
       # https://circleci.com/developer/orbs/orb/circleci/gcp-gke#commands-update-kubeconfig-with-credentials
