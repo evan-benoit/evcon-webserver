@@ -53,6 +53,7 @@ jobs:
       # https://circleci.com/developer/orbs/orb/circleci/gcp-gke#commands-update-kubeconfig-with-credentials
       - gcp-gke/update-kubeconfig-with-credentials:
           cluster: evcon-app-gke
+          additional_args:  --region us-east1 --project evcon-app
       - gcp-gke/rollout-image:
           container: webserver-container
           deployment: webserver
