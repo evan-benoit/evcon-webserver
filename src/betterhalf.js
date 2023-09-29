@@ -109,8 +109,10 @@ $(document).ready(function(){
         var league = $("#league").val();
 
         //get the timezone from the selected league's data-timezone attribute
-        var timezone = $("#league option:selected").attr("data-timezone");
-        var countryCode = $("#league option:selected").attr("data-countryCode");
+        // var timezone = $("#league option:selected").attr("data-timezone");
+        // hardcode the timezone to new york for now MUST FIX THIS
+        var timezone = "America/New_York";
+        var countryCode = $("#country").val();
 
         $.ajax({
             url: "https://us-east1-evcon-app.cloudfunctions.net/betterHalf?countryCode=" + countryCode + "&leagueID=" + league + "&startDate=" + startDate + "&endDate=" + endDate + "&timezone=" + timezone,
@@ -285,4 +287,51 @@ $(document).ready(function(){
             }
         }
     }
+
+
+    function drawCountries(data) {
+        console.log(data);
+    
+        let index = data;
+    
+        for (const country of Object.keys(index).sort()) {
+            $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
+        }
+            
+        drawLeagues(index);
+
+        $("#country").change(async function() {
+            drawLeagues(index);
+        });
+    }
+
+    function drawLeagues(index) {
+        $('#league').find('option').remove();
+      
+        var country = $("#country").find(":selected").val();
+      
+        for (const league in index[country].leagues) {
+          $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
+        }
+    }
+
+
+
+    // Make the ajax call to load the country dropdown
+    $.ajax({
+        url: "https://us-east1-evcon-app.cloudfunctions.net/getIndex",
+        method: "POST",
+        dataType: "json",
+        success: function(data){
+            drawCountries(data); 
+        },   
+        //if there's an error, print that an error occurred in the countries dropdown
+        error: function(){
+            $("#country").empty();
+
+            $("#country").append(
+                $("<option>").html("<i>Sorry, an error occurred. Please try again later.</i>")
+            );
+        }
+    });
 });
