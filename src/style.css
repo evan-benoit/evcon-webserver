@@ -11,6 +11,20 @@ button {
     float: right;
 }
 
+/* Make a style for a more exciting button */
+.excitingButton {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-style: italic;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 32px;
+}
+
 input[type="text"] {
     width: 400px;
 }
