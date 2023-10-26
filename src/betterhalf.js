@@ -289,11 +289,11 @@ $(document).ready(function(){
     }
 
 
-    function drawCountries(data) {
-        console.log(data);
-    
+    function drawCountries(data) {    
         let index = data;
-    
+
+        // add a dropdown item for international
+        $('#country').append('<option value="un">🌐Int\'l</option>');
         for (const country of Object.keys(index).sort()) {
             $('#country').append('<option value="' + country + '">' + index[country].display + '</option>');
         }
@@ -310,8 +310,16 @@ $(document).ready(function(){
       
         var country = $("#country").find(":selected").val();
       
-        for (const league in index[country].leagues) {
-          $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
+        // if the country selected is "un" (i.e. "united nations", the best iso code I could find for the world), 
+        // add the champions league and europa league!
+        // (maybe not ideal that I hardcode this, but ¯\_(ツ)_/¯)
+        if (country == "un") {
+          $('#league').append('<option value="2">Champions League</option>');
+          $('#league').append('<option value="848">Europa League</option>');
+        } else {
+            for (const league in index[country].leagues) {
+            $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
+            }
         }
     }
 
