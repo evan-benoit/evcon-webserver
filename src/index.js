@@ -202,7 +202,7 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
 
 function drawTags(datasets) {
   // initialize the list of tags
-  tags = [];
+  let tags = [];
 
   // loop through each item in data
   for (const team of datasets) {
@@ -226,7 +226,7 @@ function drawTags(datasets) {
   for (const tag of tags) {
 
     // replace spaces with underscores
-    id = "tag-" + tag.replaceAll(" ", "-");
+    let id = "tag-" + tag.replaceAll(" ", "-");
 
     $("#tags").append('<button id="' + id + '" class="italicButton">' + tag + '</button>&nbsp;');
 
