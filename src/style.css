@@ -11,6 +11,13 @@ button {
     float: right;
 }
 
+/* make a button that's italic */
+.italicButton {
+    font-style: italic;
+    border-color: #CCCCCC;
+    color: #333333;
+}
+
 /* Make a style for a more exciting button */
 .excitingButton {
     background-color: #4CAF50; /* Green */

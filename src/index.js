@@ -197,6 +197,58 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
 
   teamSeasonChart = new Chart(document.getElementById('teamSeasons'),chartTemplate);
 
+  drawTags(datasets)
+}
+
+function drawTags(datasets) {
+  // initialize the list of tags
+  tags = [];
+
+  // loop through each item in data
+  for (const team of datasets) {
+    // loop through the tags in teamName
+    if (team.tags != null) {
+
+      for (const tag of team.tags) {
+
+        // if the tag is not already in the list of tags, add it
+        if (!tags.includes(tag)) {
+          tags.push(tag);
+        }
+      }
+    }
+  }
+
+  // sort the tags
+  tags.sort();
+
+  // for each tag, add a button to the tags div
+  for (const tag of tags) {
+
+    // replace spaces with underscores
+    id = "tag-" + tag.replaceAll(" ", "-");
+
+    $("#tags").append('<button id="' + id + '" class="italicButton">' + tag + '</button>&nbsp;');
+
+    // add an event listener to the button to show only teams with that tag
+    $("#" + id).click(function() {
+
+      teamSeasonChart.data.datasets.forEach(function(ds) {
+        if (ds.tags != null) {
+          if (ds.tags.includes(tag) ) {
+            ds.hidden = false;
+          } else {
+            ds.hidden = true;
+          }
+        }
+     });
+     teamSeasonChart.update();      
+
+    });
+
+  }
+
+
 }
 
 
