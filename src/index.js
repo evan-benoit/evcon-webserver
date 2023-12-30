@@ -204,6 +204,9 @@ function drawTags(datasets) {
   // initialize the list of tags
   let tags = [];
 
+  // clear everything in the tags div
+  $("#tags").empty();
+
   // loop through each item in data
   for (const team of datasets) {
     // loop through the tags in teamName
