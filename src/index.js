@@ -1,6 +1,8 @@
 
 
 async function drawChart(countryCode, leagueID, season, chartMode) {
+  clearLogo();
+
   // make an ajax call to getSeason
   let data = await $.ajax({
     url: "https://us-east1-evcon-app.cloudfunctions.net/getSeason?countryCode=" + countryCode + "&leagueID=" + leagueID + "&season=" + season,
@@ -14,7 +16,7 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
   numberOfTeams = data.numberOfTeams;
 
 
-
+  drawLogo(leagueID, chartMode);
 
   var chartTemplate = {
     type: 'line',
@@ -198,6 +200,28 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
   teamSeasonChart = new Chart(document.getElementById('teamSeasons'),chartTemplate);
 
   drawTags(datasets)
+}
+
+function clearLogo() {
+  var canvas = document.getElementById('teamSeasons');
+  canvas.style.backgroundImage = null;
+}
+
+function drawLogo(leagueID, chartMode) {
+
+  var canvas = document.getElementById('teamSeasons');
+
+  // if we're in rank mode, hide the logo
+  if (chartMode == "bumpChart") {
+    canvas.style.backgroundImage = null;
+  } else {
+    // Set the CSS of the canvas for the background image
+    canvas.style.backgroundImage = "url('https://media.api-sports.io/football/leagues/" + leagueID + ".png')";
+    canvas.style.backgroundRepeat = "no-repeat";
+    canvas.style.backgroundPositionX = "50px";
+    canvas.style.backgroundPositionY = "50px";
+    canvas.style.backgroundSize = "20%";    
+  }
 }
 
 function drawTags(datasets) {
