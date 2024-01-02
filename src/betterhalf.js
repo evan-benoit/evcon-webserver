@@ -332,6 +332,10 @@ $(document).ready(function(){
         dataType: "json",
         success: function(data){
             drawCountries(data); 
+            // default to UK premier league
+            $("#country").val("uk");
+            $("#country").change();
+            $("#league").val("39");
         },   
         //if there's an error, print that an error occurred in the countries dropdown
         error: function(){
