@@ -1,6 +1,6 @@
 
 
-async function drawChart(countryCode, leagueID, season, chartMode) {
+async function drawChart(countryCode, leagueID, season, chartMode, logo) {
   clearLogo();
 
   // make an ajax call to getSeason
@@ -16,7 +16,7 @@ async function drawChart(countryCode, leagueID, season, chartMode) {
   numberOfTeams = data.numberOfTeams;
 
 
-  drawLogo(leagueID, chartMode);
+  drawLogo(logo, chartMode);
 
   var chartTemplate = {
     type: 'line',
@@ -207,7 +207,7 @@ function clearLogo() {
   canvas.style.backgroundImage = null;
 }
 
-function drawLogo(leagueID, chartMode) {
+function drawLogo(logo, chartMode) {
 
   var canvas = document.getElementById('teamSeasons');
 
@@ -216,7 +216,7 @@ function drawLogo(leagueID, chartMode) {
     canvas.style.backgroundImage = null;
   } else {
     // Set the CSS of the canvas for the background image
-    canvas.style.backgroundImage = "url('https://media.api-sports.io/football/leagues/" + leagueID + ".png')";
+    canvas.style.backgroundImage = "url('" + logo + "')";
     canvas.style.backgroundRepeat = "no-repeat";
     canvas.style.backgroundPositionX = "50px";
     canvas.style.backgroundPositionY = "50px";
@@ -284,6 +284,7 @@ async function redrawChart() {
   const leagueID = $("#league").find(":selected").val();
   const season = $("#season").find(":selected").val();
   const chartMode = $("#chartMode").find(":selected").val();
+  const logo = $("#league").find(":selected").data("logo");
 
   window.history.replaceState(null, null, "?country=" + countryCode + "&league=" + leagueID + "&season=" + season + "&chartMode=" + chartMode);
 
@@ -291,7 +292,7 @@ async function redrawChart() {
     teamSeasonChart.destroy();
   }
 
-  await drawChart(countryCode, leagueID, season, chartMode);
+  await drawChart(countryCode, leagueID, season, chartMode, logo);
 
   teamSeasonChart.update();
 }
@@ -352,7 +353,7 @@ function drawLeagues(index) {
   var country = $("#country").find(":selected").val();
 
   for (const league in index[country].leagues) {
-    $('#league').append('<option value="' + league + '">' + index[country].leagues[league].display + '</option>');
+    $('#league').append('<option value="' + league + '" data-logo="' + index[country].leagues[league].logo + '">' + index[country].leagues[league].display + '</option>');
   }
   drawSeasons(index);
 }
