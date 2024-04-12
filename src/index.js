@@ -474,6 +474,11 @@ $( document ).ready(function() {
 
       method: "GET",
       success: function(data) {
+
+        // make the graphDiv and summaryDiv both 50% wide
+        $("#graphDiv").css("width", "50%");
+        $("#summaryDiv").css("width", "50%");
+
         $("#summary").html(data.summary);
       },
       error: function() {
