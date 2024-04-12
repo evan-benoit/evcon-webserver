@@ -457,11 +457,24 @@ $( document ).ready(function() {
     // put a loading message in the summary
     $("#summary").text("Loading summary...");
 
+    baseURL = "http://127.0.0.1:8080/summary"
+
+    teamList = []
+    teamSeasonChart.data.datasets.forEach(function(ds) {
+      if (!ds.hidden) {
+        teamList.push(ds.label);
+      }
+    });
+
     $.ajax({
-      url: "http://127.0.0.1:8080/summary?countryCode=uk&season=2023&leagueID=39&team=Arsenal",
+      url: baseURL + "?countryCode=" + $("#country").find(":selected").val() + 
+                      "&leagueID=" + $("#league").find(":selected").val() + 
+                      "&season=" + $("#season").find(":selected").val() + 
+                      "&teamList=" + teamList.join("%2C"),  //[evtodo] there has to be a better way to do this
+
       method: "GET",
       success: function(data) {
-        $("#summary").text(data.summary);
+        $("#summary").html(data.summary);
       },
       error: function() {
         $("#summary").text("Error occurred while fetching summary.");
