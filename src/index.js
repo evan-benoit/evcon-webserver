@@ -453,7 +453,21 @@ $( document ).ready(function() {
    teamSeasonChart.update();
   });
 
+  $("#generateSummary").click(function() {
+    // put a loading message in the summary
+    $("#summary").text("Loading summary...");
 
+    $.ajax({
+      url: "http://127.0.0.1:8080/summary",
+      method: "GET",
+      success: function(data) {
+        $("#summary").text(data.summary);
+      },
+      error: function() {
+        $("#summary").text("Error occurred while fetching summary.");
+      }
+    });
+  });
 
 
   // Make the ajax call to load the country dropdown
