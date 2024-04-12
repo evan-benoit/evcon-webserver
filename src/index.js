@@ -457,9 +457,10 @@ $( document ).ready(function() {
     // put a loading message in the summary
     $("#summary").text("Loading summary...");
 
-    baseURL = "http://127.0.0.1:8080/summary"
+    let baseURL = "http://127.0.0.1:8080/summary";
 
-    teamList = []
+    let teamList = [];
+    
     teamSeasonChart.data.datasets.forEach(function(ds) {
       if (!ds.hidden) {
         teamList.push(ds.label);
