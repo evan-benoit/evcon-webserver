@@ -55,7 +55,7 @@ input[type="text"] {
 }
 
 .normalText {
-    text-align: right;
+    text-align: left;
 }
 
 /* create a table style with a thin border */

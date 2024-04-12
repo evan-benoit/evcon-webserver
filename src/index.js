@@ -453,7 +453,39 @@ $( document ).ready(function() {
    teamSeasonChart.update();
   });
 
+  $("#generateSummary").click(function() {
+    // put a loading message in the summary
+    $("#summary").text("Loading summary...");
 
+    baseURL = "http://127.0.0.1:8080/summary"
+
+    teamList = []
+    teamSeasonChart.data.datasets.forEach(function(ds) {
+      if (!ds.hidden) {
+        teamList.push(ds.label);
+      }
+    });
+
+    $.ajax({
+      url: baseURL + "?countryCode=" + $("#country").find(":selected").val() + 
+                      "&leagueID=" + $("#league").find(":selected").val() + 
+                      "&season=" + $("#season").find(":selected").val() + 
+                      "&teamList=" + teamList.join("%2C"),  //[evtodo] there has to be a better way to do this
+
+      method: "GET",
+      success: function(data) {
+
+        // make the graphDiv and summaryDiv both 50% wide
+        $("#graphDiv").css("width", "50%");
+        $("#summaryDiv").css("width", "50%");
+
+        $("#summary").html(data.summary);
+      },
+      error: function() {
+        $("#summary").text("Error occurred while fetching summary.");
+      }
+    });
+  });
 
 
   // Make the ajax call to load the country dropdown
