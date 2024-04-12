@@ -458,7 +458,7 @@ $( document ).ready(function() {
     $("#summary").text("Loading summary...");
 
     $.ajax({
-      url: "http://127.0.0.1:8080/summary",
+      url: "http://127.0.0.1:8080/summary?countryCode=uk&season=2023&leagueID=39&team=Arsenal",
       method: "GET",
       success: function(data) {
         $("#summary").text(data.summary);
