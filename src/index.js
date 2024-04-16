@@ -455,7 +455,7 @@ $( document ).ready(function() {
 
   $("#generateSummary").click(function() {
     // put a loading message in the summary
-    $("#summary").text("Loading summary...");
+    $("#summary").text("Loading summary (can take up to 30 seconds)...");
 
     // let baseURL = "http://127.0.0.1:8080/summary";
     let baseURL = "https://evcon-generate-3ljnqbebyq-ue.a.run.app/summary";
