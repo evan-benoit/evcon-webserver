@@ -473,7 +473,7 @@ $( document ).ready(function() {
       url: baseURL + "?countryCode=" + $("#country").find(":selected").val() + 
                       "&leagueID=" + $("#league").find(":selected").val() + 
                       "&season=" + $("#season").find(":selected").val() + 
-                      "&teamList=" + teamList.join("%2C"),  //[evtodo] there has to be a better way to do this
+                      "&teamList=" + encodeURIComponent(teamList[0]),
 
       method: "GET",
       success: function(data) {
