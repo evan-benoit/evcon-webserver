@@ -462,11 +462,12 @@ $( document ).ready(function() {
 
     let teamList = [];
 
-    teamSeasonChart.data.datasets.forEach(function(ds) {
-      if (!ds.hidden) {
-        teamList.push(ds.label);
+    teamSeasonChart.data.datasets.filter((ds, i) => {
+        if (teamSeasonChart.isDatasetVisible(i)) {
+          teamList.push(ds.label);
+        }
       }
-    });
+    );
 
     $.ajax({
       url: baseURL + "?countryCode=" + $("#country").find(":selected").val() + 
