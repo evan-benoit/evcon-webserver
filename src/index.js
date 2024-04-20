@@ -454,6 +454,10 @@ $( document ).ready(function() {
   });
 
   $("#generateSummary").click(function() {
+    // clear any current summaries
+    $("#summary").empty();
+    $("#summary").html("<div id='summaryAccordion'></div>");
+    
     // let baseURL = "http://127.0.0.1:8080/summary";
     let baseURL = "https://evcon-generate-3ljnqbebyq-ue.a.run.app/summary";
 
@@ -469,9 +473,9 @@ $( document ).ready(function() {
     //loop through teamlist
     for (let i = 0; i < teamList.length; i++) {
       //add an h3 for this team to summary div
-      $("#summary").append("<h3>" + teamList[i] + "</h3>");
+      $("#summaryAccordion").append("<h3>" + teamList[i] + "</h3>");
       //add a div for this team to summary div
-      $("#summary").append("<div id='summary-" + i + "'>Generating summary, may take up to 30 seconds...</div>");
+      $("#summaryAccordion").append("<div id='summary-" + i + "'>Generating summary, may take up to 30 seconds...</div>");
 
 
       $.ajax({
@@ -499,7 +503,10 @@ $( document ).ready(function() {
 
 
     // activate the accordion control
-    $( "#summary" ).accordion();
+    $( "#summaryAccordion" ).accordion({
+      collapsible: true,
+      active: false
+    });;
 
     
 
