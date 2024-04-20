@@ -488,6 +488,7 @@ $( document ).ready(function() {
           $("#summaryDiv").css("width", "50%");
 
           $("#summary-" + i).html(data.summary);
+          $("#summary-" + i).css("height", "100%");
         },
         error: function() {
           $("#summary-" + i).text("Error occurred while fetching summary.");
@@ -499,7 +500,8 @@ $( document ).ready(function() {
 
     // activate the accordion control
     $( "#summary" ).accordion();
-  
+
+    
 
 
   });
