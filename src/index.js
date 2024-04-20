@@ -454,9 +454,6 @@ $( document ).ready(function() {
   });
 
   $("#generateSummary").click(function() {
-    // put a loading message in the summary
-    $("#summary").text("Loading summary (can take up to 30 seconds)...");
-
     // let baseURL = "http://127.0.0.1:8080/summary";
     let baseURL = "https://evcon-generate-3ljnqbebyq-ue.a.run.app/summary";
 
@@ -469,25 +466,42 @@ $( document ).ready(function() {
       }
     );
 
-    $.ajax({
-      url: baseURL + "?countryCode=" + $("#country").find(":selected").val() + 
-                      "&leagueID=" + $("#league").find(":selected").val() + 
-                      "&season=" + $("#season").find(":selected").val() + 
-                      "&teamList=" + encodeURIComponent(teamList[0]),
+    //loop through teamlist
+    for (let i = 0; i < teamList.length; i++) {
+      //add an h3 for this team to summary div
+      $("#summary").append("<h3>" + teamList[i] + "</h3>");
+      //add a div for this team to summary div
+      $("#summary").append("<div id='summary-" + i + "'>Generating summary, may take up to 30 seconds...</div>");
 
-      method: "GET",
-      success: function(data) {
 
-        // make the graphDiv and summaryDiv both 50% wide
-        $("#graphDiv").css("width", "50%");
-        $("#summaryDiv").css("width", "50%");
+      $.ajax({
+        url: baseURL + "?countryCode=" + $("#country").find(":selected").val() + 
+                        "&leagueID=" + $("#league").find(":selected").val() + 
+                        "&season=" + $("#season").find(":selected").val() + 
+                        "&teamList=" + encodeURIComponent(teamList[i]),
 
-        $("#summary").html(data.summary);
-      },
-      error: function() {
-        $("#summary").text("Error occurred while fetching summary.");
-      }
-    });
+        method: "GET",
+        success: function(data) {
+
+          // make the graphDiv and summaryDiv both 50% wide
+          $("#graphDiv").css("width", "50%");
+          $("#summaryDiv").css("width", "50%");
+
+          $("#summary-" + i).html(data.summary);
+        },
+        error: function() {
+          $("#summary-" + i).text("Error occurred while fetching summary.");
+        }
+      });
+
+    }
+
+
+    // activate the accordion control
+    $( "#summary" ).accordion();
+  
+
+
   });
 
 
