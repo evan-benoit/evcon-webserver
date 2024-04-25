@@ -465,7 +465,7 @@ $( document ).ready(function() {
 
     teamSeasonChart.data.datasets.filter((ds, i) => {
         if (teamSeasonChart.isDatasetVisible(i)) {
-          teamList.push(ds.label);
+          teamList.push(ds);
         }
       }
     );
@@ -473,7 +473,7 @@ $( document ).ready(function() {
     //loop through teamlist
     for (let i = 0; i < teamList.length; i++) {
       //add an h3 for this team to summary div
-      $("#summaryAccordion").append("<h3>" + teamList[i] + "</h3>");
+      $("#summaryAccordion").append("<h3>" + teamList[i].label + "</h3>");
       //add a div for this team to summary div
       $("#summaryAccordion").append("<div id='summary-" + i + "'>Generating summary, may take up to 30 seconds...</div>");
 
@@ -482,16 +482,31 @@ $( document ).ready(function() {
         url: baseURL + "?countryCode=" + $("#country").find(":selected").val() + 
                         "&leagueID=" + $("#league").find(":selected").val() + 
                         "&season=" + $("#season").find(":selected").val() + 
-                        "&teamList=" + encodeURIComponent(teamList[i]),
+                        "&teamList=" + encodeURIComponent(teamList[i].label),
 
         method: "GET",
         success: function(data) {
+
+          // create a table to display the team's fixtures
+          let table = '<table>';
+          table += '<tr><th>Date</th><th>Home Team</th><th>Away Team</th></tr>';
+
+          // loop through the fixtures and add rows to the table
+          for (const fixture of teamList[i].data) {
+            table += '<tr>';
+            table += '<td>' + fixture.date + '</td>';
+            table += '<td>' + fixture.homeTeam + '&nbsp;-&nbsp;' + fixture.homeScore + '</td>';
+            table += '<td>' + fixture.awayTeam + '&nbsp;-&nbsp;' + fixture.awayScore + '</td>';
+            table += '</tr>';
+          }
+
+          table += '</table>';
 
           // make the graphDiv and summaryDiv both 50% wide
           $("#graphDiv").css("width", "50%");
           $("#summaryDiv").css("width", "50%");
 
-          $("#summary-" + i).html(data.summary);
+          $("#summary-" + i).html(data.summary + table);
           $("#summary-" + i).css("height", "100%");
         },
         error: function() {
