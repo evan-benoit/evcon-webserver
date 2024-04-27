@@ -488,15 +488,28 @@ $( document ).ready(function() {
         success: function(data) {
 
           // create a table to display the team's fixtures
-          let table = '<table>';
+         let table = '<table style="border: 1px solid black; padding: 10px; border-spacing: 10px;">';
           table += '<tr><th>Date</th><th>Home Team</th><th>Away Team</th></tr>';
 
           // loop through the fixtures and add rows to the table
           for (const fixture of teamList[i].data) {
+            if (!fixture.date) {
+              continue;
+            }
+
+
             table += '<tr>';
             table += '<td>' + fixture.date + '</td>';
-            table += '<td>' + fixture.homeTeam + '&nbsp;-&nbsp;' + fixture.homeScore + '</td>';
-            table += '<td>' + fixture.awayTeam + '&nbsp;-&nbsp;' + fixture.awayScore + '</td>';
+            if (fixture.homeScore > fixture.awayScore) {
+              table += '<td><strong>' + fixture.homeTeam + '&nbsp;-&nbsp;' + fixture.homeScore + '</strong></td>';
+              table += '<td>' + fixture.awayTeam + '&nbsp;-&nbsp;' + fixture.awayScore + '</td>';
+            } else if (fixture.homeScore < fixture.awayScore) {
+              table += '<td>' + fixture.homeTeam + '&nbsp;-&nbsp;' + fixture.homeScore + '</td>';
+              table += '<td><strong>' + fixture.awayTeam + '&nbsp;-&nbsp;' + fixture.awayScore + '</strong></td>';
+            } else {
+              table += '<td>' + fixture.homeTeam + '&nbsp;-&nbsp;' + fixture.homeScore + '</td>';
+              table += '<td>' + fixture.awayTeam + '&nbsp;-&nbsp;' + fixture.awayScore + '</td>';
+            }
             table += '</tr>';
           }
 
