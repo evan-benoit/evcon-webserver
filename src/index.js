@@ -513,6 +513,15 @@ $( document ).ready(function() {
             table += '</tr>';
           }
 
+          // loop through the upcoming games and add rows to the table
+          for (const fixture of teamList[i].upcomingFixtures) {
+            table += '<tr>';
+            table += '<td><i>' + fixture.date + '</i></td>';
+            table += '<td><i>' + fixture.homeTeam + '</i></td>';
+            table += '<td><i>' + fixture.awayTeam + '</i></td>';
+            table += '</tr>';
+          }
+
           table += '</table>';
 
           // make the graphDiv and summaryDiv both 50% wide
