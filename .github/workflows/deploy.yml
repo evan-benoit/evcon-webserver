@@ -26,10 +26,9 @@ jobs:
 
     - name: Debug GCP auth
       run: |
-        echo "${{ secrets.GCP_SA_KEY_PROD }}" | jq .client_email
         gcloud auth list
         gcloud config list project
-        
+
     - name: Checkout code
       uses: actions/checkout@v4
 
