@@ -1,5 +1,5 @@
 # Stage 1: build
-FROM node:20 as builder
+FROM node:20 AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
@@ -8,4 +8,4 @@ RUN npm run build
 
 # Stage 2: serve
 FROM nginx:latest
-COPY ./dist/* /usr/share/nginx/html/
+COPY --from=builder ./dist/* /usr/share/nginx/html/
