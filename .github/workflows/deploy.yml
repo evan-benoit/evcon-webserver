@@ -22,7 +22,8 @@ jobs:
         echo "Commit: $GITHUB_SHA"
         echo "Project: $GCP_PROJECT"
         echo "Secrets file exists? $( [ -n "$GCP_SA_KEY" ] && echo yes || echo no )"
-      
+    
+    - run: echo "$GCP_SA_KEY" | jq .client_email
     - name: Checkout code
       uses: actions/checkout@v4
 
