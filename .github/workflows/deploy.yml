@@ -14,6 +14,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Debug environment
+      run: |
+        echo "Branch: $GITHUB_REF"
+        echo "Commit: $GITHUB_SHA"
+        echo "Project: $GCP_PROJECT"
+        echo "Secrets file exists? $( [ -n "$GCP_SA_KEY" ] && echo yes || echo no )"
+      
     - name: Checkout code
       uses: actions/checkout@v4
 
