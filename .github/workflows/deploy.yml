@@ -6,29 +6,14 @@ on:
 
 env:
   USE_GKE_GCLOUD_AUTH_PLUGIN: True
-  GCP_PROJECT: ${{ secrets.GCP_PROJECT_PROD }}
-  GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_PROD }}
-  # GCP_PROJECT: ${{ github.ref == 'refs/heads/main' && secrets.GCP_PROJECT_PROD || secrets.GCP_PROJECT_DEV }}
-  # GCP_SA_KEY: ${{ github.ref == 'refs/heads/main' && secrets.GCP_SA_KEY_PROD || secrets.GCP_SA_KEY_DEV }}
+  REGION: us-east1                 # shared
+  CLUSTER: evcon-cluster           # shared
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Debug environment
-      run: |
-        echo "Branch: $GITHUB_REF"
-        echo "Commit: $GITHUB_SHA"
-        echo "Project: $GCP_PROJECT"
-        echo "Secrets file exists? $( [ -n "$GCP_SA_KEY" ] && echo yes || echo no )"
-        echo "Secret user: $GCP_SA_KEY" | jq .client_email
-
-    - name: Debug GCP auth
-      run: |
-        gcloud auth list
-        gcloud config list project
-
     - name: Checkout code
       uses: actions/checkout@v4
 
@@ -41,18 +26,25 @@ jobs:
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v3
       with:
-        credentials_json: $GCP_SA_KEY
+        credentials_json: ${{ github.ref == 'refs/heads/main' && secrets.GCP_SA_KEY_PROD || secrets.GCP_SA_KEY_DEV }}
 
     - name: Configure Docker
-      run: gcloud auth configure-docker ${{ secrets.GKE_REGION }}-docker.pkg.dev --quiet
+      run: gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
 
     - name: Set up GKE credentials
-      run: gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} --region ${{ secrets.GKE_REGION }} --project $GCP_PROJECT
+      run: |
+        PROJECT=${{ github.ref == 'refs/heads/main' && secrets.GCP_PROJECT_PROD || secrets.GCP_PROJECT_DEV }}
+        gcloud container clusters get-credentials $CLUSTER \
+          --region $REGION \
+          --project $PROJECT
 
     - name: Build and push image
       run: |
+        PROJECT=${{ github.ref == 'refs/heads/main' && secrets.GCP_PROJECT_PROD || secrets.GCP_PROJECT_DEV }}
+        REPO=my-repository
         GIT_SHA=$(git rev-parse --short HEAD)
-        IMAGE=${{ secrets.GKE_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repository/webserver:$GIT_SHA
+
+        IMAGE=$REGION-docker.pkg.dev/$PROJECT/$REPO/webserver:$GIT_SHA
 
         echo "Building $IMAGE"
         docker build -t $IMAGE .
