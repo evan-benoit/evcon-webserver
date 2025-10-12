@@ -6,8 +6,6 @@ on:
 
 env:
   USE_GKE_GCLOUD_AUTH_PLUGIN: True
-  REGION: us-east1                 # shared
-  CLUSTER: evcon-cluster           # shared
 
 jobs:
   build-and-deploy:
@@ -29,11 +27,16 @@ jobs:
         credentials_json: ${{ github.ref == 'refs/heads/main' && secrets.GCP_SA_KEY_PROD || secrets.GCP_SA_KEY_DEV }}
 
     - name: Configure Docker
-      run: gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
+      run: |
+        REGION=${{ github.ref == 'refs/heads/main' && secrets.GKE_REGION_PROD || secrets.GKE_REGION_DEV }}
+        gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
 
     - name: Set up GKE credentials
       run: |
         PROJECT=${{ github.ref == 'refs/heads/main' && secrets.GCP_PROJECT_PROD || secrets.GCP_PROJECT_DEV }}
+        REGION=${{ github.ref == 'refs/heads/main' && secrets.GKE_REGION_PROD || secrets.GKE_REGION_DEV }}
+        CLUSTER=${{ github.ref == 'refs/heads/main' && secrets.GKE_CLUSTER_PROD || secrets.GKE_CLUSTER_DEV }}
+
         gcloud container clusters get-credentials $CLUSTER \
           --region $REGION \
           --project $PROJECT
@@ -41,9 +44,10 @@ jobs:
     - name: Build and push image
       run: |
         PROJECT=${{ github.ref == 'refs/heads/main' && secrets.GCP_PROJECT_PROD || secrets.GCP_PROJECT_DEV }}
+        REGION=${{ github.ref == 'refs/heads/main' && secrets.GKE_REGION_PROD || secrets.GKE_REGION_DEV }}
         REPO=my-repository
-        GIT_SHA=$(git rev-parse --short HEAD)
 
+        GIT_SHA=$(git rev-parse --short HEAD)
         IMAGE=$REGION-docker.pkg.dev/$PROJECT/$REPO/webserver:$GIT_SHA
 
         echo "Building $IMAGE"
