@@ -1,0 +1,42 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker ${{ secrets.GKE_REGION }}-docker.pkg.dev --quiet
+
+    - name: Set up GKE credentials
+      run: gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER }} \
+            --region ${{ secrets.GKE_REGION }} \
+            --project ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: Build and push image
+      run: |
+        GIT_SHA=$(git rev-parse --short HEAD)
+        IMAGE=${{ secrets.GKE_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repository/webserver:$GIT_SHA
+
+        echo "Building $IMAGE"
+        docker build -t $IMAGE .
+        docker push $IMAGE
+
+        echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+
+    - name: Deploy to GKE
+      run: |
+        kubectl set image deployment/webserver webserver-container=$IMAGE
+        kubectl rollout status deployment/webserver
