@@ -22,8 +22,14 @@ jobs:
         echo "Commit: $GITHUB_SHA"
         echo "Project: $GCP_PROJECT"
         echo "Secrets file exists? $( [ -n "$GCP_SA_KEY" ] && echo yes || echo no )"
-    
-    - run: echo "$GCP_SA_KEY" | jq .client_email
+        echo "Secret user: $GCP_SA_KEY" | jq .client_email
+
+    - name: Debug GCP auth
+      run: |
+        echo "${{ secrets.GCP_SA_KEY_PROD }}" | jq .client_email
+        gcloud auth list
+        gcloud config list project
+        
     - name: Checkout code
       uses: actions/checkout@v4
 
