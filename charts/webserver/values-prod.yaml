@@ -1,0 +1,9 @@
+# values-prod.yaml
+replicaCount: 2
+image:
+  repository: us-east1-docker.pkg.dev/evcon-app/my-repository/webserver
+  tag: "{{ .SHA }}"
+service:
+  type: LoadBalancer
+  port: 80
+  loadBalancerIP: 35.231.6.232
