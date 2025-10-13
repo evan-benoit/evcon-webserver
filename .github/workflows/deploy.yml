@@ -56,7 +56,18 @@ jobs:
 
         echo "IMAGE=$IMAGE" >> $GITHUB_ENV
 
-    - name: Deploy to GKE
+    - name: Set up Helm
       run: |
-        kubectl set image deployment/webserver webserver-container=$IMAGE
-        kubectl rollout status deployment/webserver
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+    - name: Deploy with Helm
+      run: |
+        PROJECT=${{ github.ref == 'refs/heads/main' && secrets.GCP_PROJECT_PROD || secrets.GCP_PROJECT_DEV }}
+        REGION=${{ github.ref == 'refs/heads/main' && secrets.GKE_REGION_PROD || secrets.GKE_REGION_DEV }}
+        REPO=my-repository
+
+        helm upgrade --install webserver ./charts/webserver \
+          -f ./charts/webserver/values.yaml \
+          --set image.tag=${GITHUB_SHA::7} \
+          --set image.repository=$REGION-docker.pkg.dev/$PROJECT/$REPO/webserver
+          

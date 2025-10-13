@@ -1,0 +1,6 @@
+apiVersion: v2
+name: webserver
+description: A simple Helm chart for deploying my webserver
+type: application
+version: 0.1.0       # chart version (your packaging version)
+appVersion: "1.0.0"  # the app’s version (your app/container version)

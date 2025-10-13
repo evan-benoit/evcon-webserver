@@ -1,0 +1,9 @@
+# values-dev.yaml
+replicaCount: 1
+image:
+  repository: us-east1-docker.pkg.dev/evcon-app-dev/my-repository/webserver
+  tag: "latest"   # your CI pipeline will set this
+service:
+  type: LoadBalancer
+  port: 80
+  loadBalancerIP: 34.139.67.78
