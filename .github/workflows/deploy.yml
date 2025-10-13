@@ -64,4 +64,4 @@ jobs:
       run: |
         helm upgrade --install webserver ./charts/webserver \
           -f ./charts/webserver/values.yaml \
-          --set image.tag=${GITHUB_SHA::7} \
+          --set image.tag=$IMAGE \
