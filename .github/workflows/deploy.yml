@@ -62,6 +62,10 @@ jobs:
 
     - name: Deploy with Helm
       run: |
+        PROJECT=${{ github.ref == 'refs/heads/main' && secrets.GCP_PROJECT_PROD || secrets.GCP_PROJECT_DEV }}
+        REGION=${{ github.ref == 'refs/heads/main' && secrets.GKE_REGION_PROD || secrets.GKE_REGION_DEV }}
+        REPO=my-repository
+
         helm upgrade --install webserver ./charts/webserver \
           -f ./charts/webserver/values.yaml \
           --set image.tag=${GITHUB_SHA::7} \
